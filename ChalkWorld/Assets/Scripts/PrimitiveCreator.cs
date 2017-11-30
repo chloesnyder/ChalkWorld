@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Source code: https://unity3d.college/2016/11/16/steamvr-controller-input/ 
 public class PrimitiveCreator : MonoBehaviour
 {
     private SteamVR_TrackedController _controller;
