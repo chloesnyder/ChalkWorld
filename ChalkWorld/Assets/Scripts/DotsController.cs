@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// Source code: https://unity3d.college/2016/11/16/steamvr-controller-input/
 public class DotsController : MonoBehaviour {
 
     // Use this for initialization
@@ -27,7 +29,6 @@ public class DotsController : MonoBehaviour {
 	}
 
 
-	#region Primitive Spawning
 	private void HandleTriggerClicked(object sender, ClickedEventArgs e)
 	{
 		// this object was clicked - do something
@@ -53,7 +54,7 @@ public class DotsController : MonoBehaviour {
 			// Destroy(gameObject);
 		}
 	}
-	#endregion
+
 
 
   /*  void OnMouseDown()
