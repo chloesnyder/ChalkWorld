@@ -22,9 +22,10 @@ GameObject:
   - component: {fileID: 33403013389534732}
   - component: {fileID: 135758795098459976}
   - component: {fileID: 23913727501057060}
+  - component: {fileID: 114936385872858812}
   m_Layer: 0
   m_Name: MyDot
-  m_TagString: Untagged
+  m_TagString: Dot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,6 +84,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1015063895675818}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114936385872858812
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1015063895675818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe34a76de7a9ebe49bd079ee432d1138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135758795098459976
 SphereCollider:
   m_ObjectHideFlags: 1
