@@ -6,8 +6,10 @@ public class Global : MonoBehaviour {
     public Vector3 start;
     public Vector3 end;
     public Color color;
+    public int count = 0;
     // Use this for initialization
     public bool selected;
+    public List<GameObject> lines = new List<GameObject>();
 	void Start () {
         selected = false;
 	}
@@ -16,6 +18,7 @@ public class Global : MonoBehaviour {
 	void Update () {
 		
 	}
+   
     public void DrawLine(Vector3 start, Vector3 end, Color color)
     {
         GameObject myLine = new GameObject();
@@ -29,7 +32,8 @@ public class Global : MonoBehaviour {
         lr.endWidth = 0.1f;
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
-
+        count++;
+        lines.Add(myLine);
         // GameObject.Destroy(myLine, duration);
     }
 }

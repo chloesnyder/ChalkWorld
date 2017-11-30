@@ -11,6 +11,7 @@ public class DotsController : MonoBehaviour {
         Global  g = obj.GetComponent<Global>();
 
     }
+
     void OnMouseDown()
     {
         // this object was clicked - do something
