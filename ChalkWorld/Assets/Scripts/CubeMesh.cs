@@ -123,19 +123,35 @@ public class CubeMesh : MonoBehaviour {
         Global g = obj.GetComponent<Global>();
         if (g.count == 4)
         {
-            Destroy(gameObject);
-           for(int i = 0; i < 8; i++)
-            {
-                Destroy(dots[i]);
-            }
-           for(int i = 0; i < 4; i++)
-            {
-                Destroy(lines[i]);
-            }
-           for(int i = 0; i < g.lines.Capacity; i++)
-            {
-                Destroy(g.lines[i]);
-            }
+			Die ();
         }
 	}
+	public void Die(){
+		
+		GameObject obj = GameObject.Find("GlobalObject");
+		Global g = obj.GetComponent<Global>();
+		for(int i = 0; i < 8; i++)
+		{
+			Destroy(dots[i]);
+		}
+		for(int i = 0; i < 4; i++)
+		{
+			Destroy(lines[i]);
+		}
+		for(int i = 0; i < g.lines.Capacity; i++)
+		{
+			Destroy(g.lines[i]);
+		}
+		Destroy(gameObject);
+	}
+	/*
+	void OnCollisionEnter(Collision collision)
+	{
+		// the Collision contains a lot of info, but it’s the colliding
+		// object we’re most interested in. 
+		Debug.Log("enter collision");
+		Debug.Log ("The cube has collided with " + collision.ToString ());
+		Destroy (gameObject);
+	}
+	*/
 }
