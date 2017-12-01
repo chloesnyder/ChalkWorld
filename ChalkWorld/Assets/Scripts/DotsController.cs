@@ -8,7 +8,7 @@ public class DotsController : MonoBehaviour {
 
     // Use this for initialization
 	private SteamVR_TrackedController _controller;
-
+    private bool is_collide = false;
 	void Start () {
         GameObject obj = GameObject.Find("GlobalObject");
         Global  g = obj.GetComponent<Global>();
@@ -36,52 +36,95 @@ public class DotsController : MonoBehaviour {
 		Global g = obj.GetComponent<Global>();
 		bool status = g.selected;
 		Debug.Log("mouse down once");
-		if (status == false)
-		{
-			Debug.Log("status false");
-			g.selected = true;
-			g.start = gameObject.transform.position;
-			// Destroy(gameObject);
-		}
-		else
-		{
-			Debug.Log("status true");
-			g.end = gameObject.transform.position;
-			g.selected = false;
-			g.color = new Color(0.2f, 1, 0.4f);
-			g.DrawLine(g.start, g.end, g.color);
-			Debug.Log("start is" + g.start + "and end is " + g.end);
-			// Destroy(gameObject);
-		}
+        if (is_collide == true)
+        {
+            if (status == false)
+            {
+                Debug.Log("status false");
+                g.selected = true;
+                g.start = gameObject.transform.position;
+                // Destroy(gameObject);
+            }
+            else
+            {
+                Debug.Log("status true");
+                g.end = gameObject.transform.position;
+                g.selected = false;
+                g.color = new Color(0.2f, 1, 0.4f);
+                g.DrawLine(g.start, g.end, g.color);
+                Debug.Log("start is" + g.start + "and end is " + g.end);
+                // Destroy(gameObject);
+            }
+        }
 	}
 
-
-
-  /*  void OnMouseDown()
+    void OnCollisionEnter(Collision collision)
     {
-        // this object was clicked - do something
-        GameObject obj = GameObject.Find("GlobalObject");
-        Global g = obj.GetComponent<Global>();
-        bool status = g.selected;
-        Debug.Log("mouse down once");
-        if (status == false)
+        // the Collision contains a lot of info, but it’s the colliding
+        // object we’re most interested in. 
+        Collider collider = collision.collider;
+        // AudioSource.PlayClipAtPoint(appear, Camera.main.transform.position);
+        if (collider.CompareTag("Dot"))
         {
-            Debug.Log("status false");
-            g.selected = true;
-            g.start = gameObject.transform.position;
-           // Destroy(gameObject);
+            DotsController control =
+            collider.gameObject.GetComponent<DotsController>(); // let the other object handle its own death throes
+            is_collide = true;
+
+            // a.transform.rotation = Camera.main.transform.rotation;
         }
+     
         else
-        {
-            Debug.Log("status true");
-            g.end = gameObject.transform.position;
-            g.selected = false;
-            g.color = new Color(0.2f, 1, 0.4f);
-            g.DrawLine(g.start, g.end, g.color);
-            Debug.Log("start is" + g.start + "and end is " + g.end);
-           // Destroy(gameObject);
+        { // if we collided with something else, print to console
+          // what the other thing was
+            Debug.Log("Collided with " + collider.tag);
         }
-    }*/
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        // the Collision contains a lot of info, but it’s the colliding
+        // object we’re most interested in. 
+        Collider collider = collision.collider;
+        // AudioSource.PlayClipAtPoint(appear, Camera.main.transform.position);
+        if (collider.CompareTag("Dot"))
+        {
+            DotsController control =
+            collider.gameObject.GetComponent<DotsController>(); // let the other object handle its own death throes
+            is_collide = false;
+
+            // a.transform.rotation = Camera.main.transform.rotation;
+        }
+
+        else
+        { // if we collided with something else, print to console
+          // what the other thing was
+            Debug.Log("Collided with " + collider.tag);
+        }
+    }
+    /*  void OnMouseDown()
+      {
+          // this object was clicked - do something
+          GameObject obj = GameObject.Find("GlobalObject");
+          Global g = obj.GetComponent<Global>();
+          bool status = g.selected;
+          Debug.Log("mouse down once");
+          if (status == false)
+          {
+              Debug.Log("status false");
+              g.selected = true;
+              g.start = gameObject.transform.position;
+             // Destroy(gameObject);
+          }
+          else
+          {
+              Debug.Log("status true");
+              g.end = gameObject.transform.position;
+              g.selected = false;
+              g.color = new Color(0.2f, 1, 0.4f);
+              g.DrawLine(g.start, g.end, g.color);
+              Debug.Log("start is" + g.start + "and end is " + g.end);
+             // Destroy(gameObject);
+          }
+      }*/
     // Update is called once per frame
     void Update () {
 		
