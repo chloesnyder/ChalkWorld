@@ -14,6 +14,16 @@ public class DeveloperDefined : BasedGestureHandle {
     // score - the confidence level of this identification. Above 1 is generally considered a match
     void HandleOnDeveloperDefinedMatch(long gestureId, string gesture, float score) {
         textToUpdate = string.Format("<color=cyan>Gesture Match: {0} Score: {1}</color>", gesture.Trim(), score);
+		if (gesture.Equals ("Square")) {
+			Debug.Log ("Drew a square!");
+			GameObject rc = GameObject.FindGameObjectWithTag ("RightController");
+			rc.GetComponent<RightController> ().SpawnCube ();
+		} else if (gesture.Equals("Circle")){
+			Debug.Log ("Drew a circle!");
+			GameObject rc = GameObject.FindGameObjectWithTag ("RightController");
+			rc.GetComponent<RightController> ().SpawnCylinder ();
+
+		}
     }
 
     // Use this for initialization
