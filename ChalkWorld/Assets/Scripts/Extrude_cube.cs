@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-public class Extrude_cube : MonoBehaviour {
+public class Extrude_cube : MonoBehaviour
+{
 
     // Use this for initialization
     public struct Face
@@ -30,17 +31,18 @@ public class Extrude_cube : MonoBehaviour {
         end = outbound;
         CreatPlane();
         Mesh mesh = GetComponent<MeshFilter>().mesh;
-       // Debug.Log("triangle number is" + mesh.triangles.Length);
+        // Debug.Log("triangle number is" + mesh.triangles.Length);
         for (int i = 0; i < mesh.vertices.Length; i++)
             // Debug.Log(mesh.vertices[i]);
             GetComponent<MeshCollider>().sharedMesh = mesh;
+        
         for (int i = 0; i < faces.Count; i++)
         {
-          //  Debug.Log("face center is:" + faces[i].center);
+            //  Debug.Log("face center is:" + faces[i].center);
         }
         Vector3 start1 = new Vector3(0, 0.1f, 0);
         Vector3 end1 = new Vector3(0, 1.2f, 0);
-        Extrude(start1, end1);
+      //  Extrude(start1, end1);
 
     }
 
@@ -53,14 +55,14 @@ public class Extrude_cube : MonoBehaviour {
     private void CreatPlane()
     {
         Vector3[] vertices = {
-            new Vector3 (-0.5f, -0.1f, -0.5f), //0
-            new Vector3 (0.5f, -0.1f, -0.5f),  //1
-            new Vector3 (0.5f, 0.1f, -0.5f),    //2
-            new Vector3 (-0.5f, 0.1f, -0.5f),   //3
-            new Vector3 (-0.5f, 0.1f, 0.5f),    //4
-            new Vector3 (0.5f, 0.1f, 0.5f),     //5
-            new Vector3 (0.5f, -0.1f, 0.5f),    //6
-            new Vector3 (-0.5f, -0.1f, 0.5f),   //7
+            new Vector3 (-0.5f, -0.5f, -0.5f), //0
+            new Vector3 (0.5f, -0.5f, -0.5f),  //1
+            new Vector3 (0.5f, 0.5f, -0.5f),    //2
+            new Vector3 (-0.5f, 0.5f, -0.5f),   //3
+            new Vector3 (-0.5f, 0.5f, 0.5f),    //4
+            new Vector3 (0.5f, 0.5f, 0.5f),     //5
+            new Vector3 (0.5f, -0.5f, 0.5f),    //6
+            new Vector3 (-0.5f, -0.5f, 0.5f),   //7
         };
         for (int i = 0; i < 8; i++)
         {
@@ -69,14 +71,21 @@ public class Extrude_cube : MonoBehaviour {
         int[] triangles = {
             0, 2, 1, //face front
 			0, 3, 2,
+
+            2, 4, 5,
             2, 3, 4, //face top
-			2, 4, 5,
-            1, 2, 5, //face right
+
+
 			1, 5, 6,
+            1, 2, 5, //face right
+			
+
+            0, 4, 3,
             0, 7, 4, //face left
-			0, 4, 3,
+			
+            5, 7, 6,
             5, 4, 7, //face back
-			5, 7, 6,
+			
             0, 6, 7, //face bottom
 			0, 1, 6
         };
@@ -99,7 +108,7 @@ public class Extrude_cube : MonoBehaviour {
         faces.Add(new Face(new Vector3(0.5f, 0, 0), index3));
         int[] index4 = { 0, 3, 4, 7 };
         faces.Add(new Face(new Vector3(-0.5f, 0, 0), index4));
-        int[] index5 = { 4, 5, 6, 7 };
+        int[] index5 = {  5, 6, 7,4 };
         faces.Add(new Face(new Vector3(0, 0, 0.5f), index5));
         int[] index6 = { 0, 7, 6, 1 };
         faces.Add(new Face(new Vector3(0, -0.1f, 0), index6));
@@ -121,18 +130,22 @@ public class Extrude_cube : MonoBehaviour {
     {
         Vector3 normal = end - start;
         Face face = new Face();
+        int count = 0;
         for (int i = 0; i < faces.Count; i++)
         {
+            count++;
             if (faces[i].center == start)
             {
-                Debug.Log("can find the extrude start point");
+                Debug.Log("------------------------can find the extrude start point");
                 face = faces[i];
-                break;
+               // break;
             }
+         
         }
+        Debug.Log("the start point is" + face.center);
         int index = verts.Count; //get the current number of vert we have;
-       // Debug.Log("verts number is" + index);
-        //add verts
+                                 // Debug.Log("verts number is" + index);
+                                 //add verts
         Vector3 v0 = verts[face.points[0]] + normal;
         Vector3 v1 = verts[face.points[1]] + normal;
         Vector3 v2 = verts[face.points[2]] + normal;
@@ -143,7 +156,7 @@ public class Extrude_cube : MonoBehaviour {
         verts.Add(v3);
 
         //add new triangles& faces
-
+        /*
         int[] front = { face.points[0], face.points[1], index + 1, index };
         GeneFace(front);  //front face;
         int[] bank = { face.points[2], face.points[3], index + 3, index + 2 };
@@ -154,6 +167,23 @@ public class Extrude_cube : MonoBehaviour {
         GeneFace(left);   //left face;
         int[] top = { index, index + 1, index + 2, index + 3 };
         GeneFace(top);    //top face;
+        */
+        
+        int[] front = { face.points[0], face.points[3], index + 3, index };
+        GeneFace(front);  //front face;
+
+        int[] bank = { index + 2, face.points[2], face.points[1], index + 1 };
+        GeneFace(bank);     //bank face;
+
+        int[] right = { face.points[3], face.points[2], index + 2, index + 3 };
+        GeneFace(right);   //right face;
+        int[] left = { face.points[0], index, index + 1, face.points[1] };
+        GeneFace(left);   //left face;
+        int[] top = { index + 3, index + 2, index + 1, index };
+        GeneFace(top);    //top face;
+
+    
+
         //refresh the mesh
         Vector3[] vertices = verts.ToArray();
         int[] triangles = triangle.ToArray();
@@ -166,7 +196,7 @@ public class Extrude_cube : MonoBehaviour {
         mesh.RecalculateNormals();
         for (int i = 0; i < mesh.normals.Length; i++)
         {
-           // Debug.Log("normal is:" + mesh.normals[i]);
+            // Debug.Log("normal is:" + mesh.normals[i]);
         }
         GetComponent<MeshCollider>().sharedMesh = mesh;
 

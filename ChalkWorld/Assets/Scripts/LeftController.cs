@@ -150,13 +150,15 @@ public class LeftController : MonoBehaviour {
             }
         }
         start = far;
+        objToextrude = null;
     }
 
 
     private void HandleTriggerClicked(object sender, ClickedEventArgs e)
 	{
-		// this object was clicked - do something
-		GameObject obj = GameObject.Find("GlobalObject");
+        // this object was clicked - do something
+        Debug.Log("cliceked trigger");
+        GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
 		bool status = g.selected;
 		
@@ -202,6 +204,11 @@ public class LeftController : MonoBehaviour {
                 objToextrude = collidingObject;
             }
         }
+        else
+        {
+            Debug.Log("trigger clicked but no colliding object");
+        }
+     
 	}
 
 
