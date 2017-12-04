@@ -11,6 +11,8 @@ public class RightController : MonoBehaviour {
 	public GameObject SpawnedCylinder;
 
 	private SteamVR_TrackedController _controller;
+	private bool spawn;
+	private string spawnObj;
 	private bool is_collide = false;
 	private SteamVR_TrackedObject trackedObj;
 	private GameObject collidingObject;
@@ -171,54 +173,34 @@ public class RightController : MonoBehaviour {
 			Debug.Log("Collided with " + collider.tag);
 		}
 	}
+	public void setSpawn(string obj){
+		spawnObj = obj;
+		spawn = true;
+	}
 
-	/*  void OnMouseDown()
-      {
-          // this object was clicked - do something
-          GameObject obj = GameObject.Find("GlobalObject");
-          Global g = obj.GetComponent<Global>();
-          bool status = g.selected;
-          Debug.Log("mouse down once");
-          if (status == false)
-          {
-              Debug.Log("status false");
-              g.selected = true;
-              g.start = gameObject.transform.position;
-             // Destroy(gameObject);
-          }
-          else
-          {
-              Debug.Log("status true");
-              g.end = gameObject.transform.position;
-              g.selected = false;
-              g.color = new Color(0.2f, 1, 0.4f);
-              g.DrawLine(g.start, g.end, g.color);
-              Debug.Log("start is" + g.start + "and end is " + g.end);
-             // Destroy(gameObject);
-          }
-      }*/
+	void SpawnObject(){
+		GameObject spawned;
+		if (spawnObj.Equals ("Square")) {
+			Debug.Log ("Spawned a cube");
+			spawned = Instantiate (SpawnedCube, Vector3.zero, Quaternion.identity);
+		} else if (spawnObj.Equals ("Circle")) {
+			Debug.Log ("Spawned a cylinder");
+			spawned = Instantiate (SpawnedCylinder, Vector3.zero, Quaternion.identity);
+		}
+//		objectInHand = spawned;
+//		collidingObject = null;
+//		var joint = AddFixedJoint();
+//		joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
 
-	public void SpawnCube(){
-		Debug.Log("Spawn Cube");
-		GameObject spawned = Instantiate (SpawnedCube, this.GetComponent<BoxCollider> ().transform.position, Quaternion.identity);
-		objectInHand = spawned;
-		collidingObject = null;
-		var joint = AddFixedJoint();
-		joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
+	}
 		
-	}
-
-	public void SpawnCylinder(){
-		Debug.Log("Spawn Cylinder");
-		GameObject spawned = Instantiate (SpawnedCylinder, this.GetComponent<BoxCollider> ().transform.position, Quaternion.identity);
-		objectInHand = spawned;
-		collidingObject = null;
-		var joint = AddFixedJoint();
-		joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
-	}
 
 	// Update is called once per frame
 	void Update () {
+		if (spawn) {
+			SpawnObject ();
+			spawn = false;
+		}
 		if (Controller.GetHairTriggerDown())
 		{
 			if (collidingObject) {

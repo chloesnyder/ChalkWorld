@@ -7,6 +7,7 @@ public class DeveloperDefined : BasedGestureHandle {
 
     // Callback for receiving signature/gesture progression or identification results
     AirSigManager.OnDeveloperDefinedMatch developerDefined;
+	RightController rc;
 
     // Handling developer defined gesture match callback - This is invoked when the Mode is set to Mode.DeveloperDefined and a gesture is recorded.
     // gestureId - a serial number
@@ -16,13 +17,10 @@ public class DeveloperDefined : BasedGestureHandle {
         textToUpdate = string.Format("<color=cyan>Gesture Match: {0} Score: {1}</color>", gesture.Trim(), score);
 		if (gesture.Equals ("Square")) {
 			Debug.Log ("Drew a square!");
-			//GameObject rc = GameObject.FindGameObjectWithTag ("RightController");
-			//rc.GetComponent<RightController> ().SpawnCube ();
+			rc.setSpawn (gesture.Trim ());
 		} else if (gesture.Equals("Circle")){
 			Debug.Log ("Drew a circle!");
-			//GameObject rc = GameObject.FindGameObjectWithTag ("RightController");
-			//rc.GetComponent<RightController> ().SpawnCylinder ();
-
+			rc.setSpawn (gesture.Trim ());
 		}
     }
 
@@ -34,7 +32,7 @@ public class DeveloperDefined : BasedGestureHandle {
         //textMode.text = string.Format("Mode: {0}", AirSigManager.Mode.DeveloperDefined.ToString());
        // textResult.text = defaultResultText = "Pressing trigger and write symbol in the air\nReleasing trigger when finish";
         //textResult.alignment = TextAnchor.UpperCenter;
-		instruction.SetActive(true);
+		instruction.SetActive(false);
         ToggleGestureImage("All");
 
         // Configure AirSig by specifying target 
@@ -57,6 +55,7 @@ public class DeveloperDefined : BasedGestureHandle {
             SteamVR_Controller.ButtonMask.Touchpad,
             AirSigManager.PressOrTouch.PRESS);
 
+		rc = GameObject.FindGameObjectWithTag ("RightController").GetComponent<RightController> ();
     }
 
 
