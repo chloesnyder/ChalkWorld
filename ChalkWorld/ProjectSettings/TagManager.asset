@@ -10,6 +10,7 @@ TagManager:
   - Dot
   - CameraRig
   - RightController
+  - Ecube
   layers:
   - Default
   - TransparentFX

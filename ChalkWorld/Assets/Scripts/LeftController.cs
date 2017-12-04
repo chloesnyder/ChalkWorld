@@ -12,7 +12,12 @@ public class LeftController : MonoBehaviour {
     private SteamVR_TrackedObject trackedObj;
     private GameObject collidingObject;
     // 2
-    private GameObject objectInHand; 
+    private GameObject objectInHand;
+
+    private GameObject objToextrude;
+    private Vector3 far= new Vector3(-100, -100, -100);
+    private Vector3 start;
+    private Vector3 end;
     private SteamVR_Controller.Device Controller
     {
         get { return SteamVR_Controller.Input((int)trackedObj.index); }
@@ -21,6 +26,7 @@ public class LeftController : MonoBehaviour {
     void Awake()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
+        start = far;
     }
     private void SetCollidingObject(Collider col)
     {
@@ -41,16 +47,18 @@ public class LeftController : MonoBehaviour {
 		if(other.CompareTag ("Dot")){
 			is_collide = true;
 		}
+        SetCollidingObject(other);
+
     }
 
     // 2
     public void OnTriggerStay(Collider other)
     {
-        Debug.Log("trigger stay");
+       // Debug.Log("trigger stay");
        // SetCollidingObject(other);
 		//if (other.CompareTag ("Cube")) {
 			
-		//	SetCollidingObject (other);
+			SetCollidingObject (other);
 			//other.gameObject.GetComponent<CubeMesh>().Die ();
 		//}
 
@@ -109,23 +117,49 @@ public class LeftController : MonoBehaviour {
 	{
 		_controller = GetComponent<SteamVR_TrackedController>();
 		_controller.TriggerClicked += HandleTriggerClicked;
+        _controller.TriggerUnclicked += HandleTriggerUnClicked;
 		//_controller.PadClicked += HandlePadClicked;
 	}
 
 	private void OnDisable()
 	{
 		_controller.TriggerClicked -= HandleTriggerClicked;
+        _controller.TriggerUnclicked -= HandleTriggerUnClicked;
 		//_controller.PadClicked -= HandlePadClicked;
 	}
 
 
-	private void HandleTriggerClicked(object sender, ClickedEventArgs e)
+    private void HandleTriggerUnClicked(object sender, ClickedEventArgs e)
+    {
+        Debug.Log("uncliceked trigger");
+        if (start != far)        //get one point to extrude;
+        {
+            
+            if (objToextrude != null) 
+            {
+                Vector3 triggerPoint = transform.position;
+                end = objToextrude.transform.InverseTransformPoint(triggerPoint);
+                    Extrude_cube extrude = objToextrude.GetComponent<Extrude_cube>();
+                    extrude.Extrude(start, end);
+                    start = far;
+                
+            }
+            else
+            {
+                Debug.Log("obj to extrude is null");
+            }
+        }
+        start = far;
+    }
+
+
+    private void HandleTriggerClicked(object sender, ClickedEventArgs e)
 	{
 		// this object was clicked - do something
 		GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
 		bool status = g.selected;
-		Debug.Log("mouse down once");
+		
 		if (is_collide == true) {
 			if (status == false) {
 				Debug.Log ("status false");
@@ -142,7 +176,32 @@ public class LeftController : MonoBehaviour {
 				// Destroy(gameObject);
 			}
 		}
-        
+
+        if (collidingObject != null)
+        {
+            if (collidingObject.CompareTag("Ecube"))
+            {
+                Debug.Log("trigger clicked extude cube");
+                //get the start point
+                Vector3 triggerplace = transform.position;
+                Vector3 localtrigger = collidingObject.transform.InverseTransformPoint(triggerplace);
+                Debug.Log("the trigger in cube space is" + localtrigger);
+                Extrude_cube extrude = collidingObject.GetComponent<Extrude_cube>();
+               
+                start = extrude.faces[0].center;
+                float distance = (localtrigger - start).magnitude;
+                for(int i = 1; i < extrude.faces.Count; i++)
+                {
+                    float length = (extrude.faces[i].center - localtrigger).magnitude;
+                    if (distance > length)
+                    {
+                        start = extrude.faces[i].center;
+                    }
+                }
+                Debug.Log("the start point to extrude is" + start);
+                objToextrude = collidingObject;
+            }
+        }
 	}
 
 
@@ -160,7 +219,10 @@ public class LeftController : MonoBehaviour {
 
             // a.transform.rotation = Camera.main.transform.rotation;
         }
-     
+     else if (collider.CompareTag("Ecube"))
+        {
+            Debug.Log("collide with ecube");
+        }
         else
         { // if we collided with something else, print to console
           // what the other thing was
@@ -189,31 +251,7 @@ public class LeftController : MonoBehaviour {
         }
     }
   
-    /*  void OnMouseDown()
-      {
-          // this object was clicked - do something
-          GameObject obj = GameObject.Find("GlobalObject");
-          Global g = obj.GetComponent<Global>();
-          bool status = g.selected;
-          Debug.Log("mouse down once");
-          if (status == false)
-          {
-              Debug.Log("status false");
-              g.selected = true;
-              g.start = gameObject.transform.position;
-             // Destroy(gameObject);
-          }
-          else
-          {
-              Debug.Log("status true");
-              g.end = gameObject.transform.position;
-              g.selected = false;
-              g.color = new Color(0.2f, 1, 0.4f);
-              g.DrawLine(g.start, g.end, g.color);
-              Debug.Log("start is" + g.start + "and end is " + g.end);
-             // Destroy(gameObject);
-          }
-      }*/
+
     // Update is called once per frame
     void Update () {
         if (Controller.GetHairTriggerDown())
