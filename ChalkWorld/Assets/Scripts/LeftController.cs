@@ -13,7 +13,7 @@ public class LeftController : MonoBehaviour {
     private GameObject collidingObject;
     // 2
     private GameObject objectInHand;
-
+    private GameObject objToErease;
     private GameObject objToextrude;
     private Vector3 far= new Vector3(-100, -100, -100);
     private Vector3 start;
@@ -73,8 +73,9 @@ public class LeftController : MonoBehaviour {
             return;
         }
 		if(other.CompareTag ("Dot")){
-			is_collide = false;
+			
 		}
+        is_collide = false;
         collidingObject = null;
     }
     private void GrabObject()
@@ -137,6 +138,7 @@ public class LeftController : MonoBehaviour {
             
             if (objToextrude != null) 
             {
+
                 Vector3 triggerPoint = transform.position;
                 end = objToextrude.transform.InverseTransformPoint(triggerPoint);
                     Extrude_cube extrude = objToextrude.GetComponent<Extrude_cube>();
@@ -144,6 +146,18 @@ public class LeftController : MonoBehaviour {
                     start = far;
                 
             }
+            /*
+            else if (objToErease!=null&& collidingObject!=null&&collidingObject.CompareTag("Dot"))
+            {
+                GameObject obj = GameObject.Find("GlobalObject");
+                Global g = obj.GetComponent<Global>();
+                g.end = gameObject.transform.position;
+                g.selected = false;
+                g.color = new Color(0.2f, 1, 0.4f);
+                g.DrawLine(g.start, g.end, g.color);
+                Debug.Log("start is" + g.start + "and end is " + g.end);
+            }
+            */
             else
             {
                 Debug.Log("obj to extrude is null");
@@ -151,6 +165,7 @@ public class LeftController : MonoBehaviour {
         }
         start = far;
         objToextrude = null;
+        objToErease = null;
     }
 
 
@@ -178,7 +193,7 @@ public class LeftController : MonoBehaviour {
 				// Destroy(gameObject);
 			}
 		}
-
+        
         if (collidingObject != null)
         {
             if (collidingObject.CompareTag("Ecube"))
@@ -203,6 +218,15 @@ public class LeftController : MonoBehaviour {
                 Debug.Log("the start point to extrude is" + start);
                 objToextrude = collidingObject;
             }
+            /*
+            else if (collidingObject.CompareTag("Dot"))
+            {
+                Debug.Log("start point of dot");
+                g.selected = true;
+                g.start = gameObject.transform.position;
+                objToErease = collidingObject;
+            }
+            */
         }
         else
         {
