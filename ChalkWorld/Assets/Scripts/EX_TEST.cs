@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-public class Extrude_cube : MonoBehaviour
-{
+public class EX_TEST : MonoBehaviour {
 
-    // Use this for initialization
-	public List<GameObject> dots=new List<GameObject>();
-	public GameObject myDots;
+    public List<GameObject> dots = new List<GameObject>();
+    public GameObject myDots;
     public struct Face
     {
         public Vector3 center;
@@ -32,14 +30,14 @@ public class Extrude_cube : MonoBehaviour
         start = outbound;
         end = outbound;
         CreatPlane();
-		CreateSphere ();
+        CreateSphere();
         Mesh mesh = GetComponent<MeshFilter>().mesh;
-		GetComponent<MeshCollider>().sharedMesh = mesh;
+        GetComponent<MeshCollider>().sharedMesh = mesh;
         // Debug.Log("triangle number is" + mesh.triangles.Length);
-     
-        Vector3 start1 = new Vector3(0, 0.1f, 0);
-        Vector3 end1 = new Vector3(0, 1.2f, 0);
-       Extrude(start1, end1);
+
+        Vector3 start1 = new Vector3(0.5f, 0, 0);
+        Vector3 end1 = new Vector3(1, 1.2f, 0);
+        Extrude(start1, end1);
 
 
     }
@@ -49,44 +47,43 @@ public class Extrude_cube : MonoBehaviour
     {
 
     }
-	private void CreateSphere()
-	{
-		Mesh mesh = GetComponent<MeshFilter>().mesh;
+    private void CreateSphere()
+    {
+        Mesh mesh = GetComponent<MeshFilter>().mesh;
 
-		Debug.Log(mesh.vertices[0]);
-		for (int i = 0; i < mesh.vertices.Length; i++)
-		{
+        Debug.Log(mesh.vertices[0]);
+        for (int i = 0; i < mesh.vertices.Length; i++)
+        {
 
+            addDot(mesh.vertices[i]);
 
-			//GameObject obj = Instantiate(myDots, transform.TransformPoint(mesh.vertices[i]), transform.rotation) as GameObject;
-			//obj.GetComponent<DotController> ().cube = gameObject;
-			//dots.Add(obj);
-			addDot (mesh.vertices [i]);
-
-		}
-	}
-	private void addDot(Vector3 point){
-		GameObject obj = Instantiate(myDots, transform.TransformPoint(point), transform.rotation) as GameObject;
-		obj.transform.parent = this.transform;
-		obj.GetComponent<DotController> ().cube = gameObject;
-		dots.Add(obj);
-	}
+        }
+    }
+    private void addDot(Vector3 point)
+    {
+        GameObject obj = Instantiate(myDots, transform.TransformPoint(point), transform.rotation) as GameObject;
+        obj.transform.parent = this.transform;
+        obj.GetComponent<DotController>().cube = gameObject;
+        dots.Add(obj);
+    }
 
 
-	public void Die(){
-		Destroy(gameObject);
-		GameObject obj = GameObject.Find("GlobalObject");
-		Global g = obj.GetComponent<Global>();
-		for(int i=0;i<dots.Count;i++){
-			Destroy(dots[i]);
-		}
+    public void Die()
+    {
+        Destroy(gameObject);
+        GameObject obj = GameObject.Find("GlobalObject");
+        Global g = obj.GetComponent<Global>();
+        for (int i = 0; i < dots.Count; i++)
+        {
+            Destroy(dots[i]);
+        }
 
-		for(int i = 0; i < g.lines.Capacity; i++)
-		{
-			Destroy(g.lines[i]);
-		}
+        for (int i = 0; i < g.lines.Capacity; i++)
+        {
+            Destroy(g.lines[i]);
+        }
 
-	}
+    }
     private void CreatPlane()
     {
         Vector3[] vertices = {
@@ -138,15 +135,15 @@ public class Extrude_cube : MonoBehaviour
         int[] index = { 0, 1, 2, 3 };
         faces.Add(new Face(new Vector3(0, 0, -0.5f), index));
         int[] index2 = { 2, 5, 4, 3 };
-        faces.Add(new Face(new Vector3(0, 0.1f, 0), index2));
+        faces.Add(new Face(new Vector3(0, 0.5f, 0), index2));
         int[] index3 = { 1, 6, 5, 2 };
         faces.Add(new Face(new Vector3(0.5f, 0, 0), index3));
         int[] index4 = { 0, 3, 4, 7 };
         faces.Add(new Face(new Vector3(-0.5f, 0, 0), index4));
-        int[] index5 = {  5, 6, 7,4 };
+        int[] index5 = { 5, 6, 7, 4 };
         faces.Add(new Face(new Vector3(0, 0, 0.5f), index5));
         int[] index6 = { 0, 7, 6, 1 };
-        faces.Add(new Face(new Vector3(0, -0.1f, 0), index6));
+        faces.Add(new Face(new Vector3(0, -0.5f, 0), index6));
     }
     void GeneFace(int[] v)
     {
@@ -166,6 +163,7 @@ public class Extrude_cube : MonoBehaviour
         Vector3 normal = end - start;
         Face face = new Face();
         int count = 0;
+        Vector3[] newVertPosition= new Vector3[4];
         for (int i = 0; i < faces.Count; i++)
         {
             count++;
@@ -173,26 +171,89 @@ public class Extrude_cube : MonoBehaviour
             {
                 Debug.Log("------------------------can find the extrude start point");
                 face = faces[i];
-               // break;
+                for(int j = 0; j < 4; j++)
+                {
+                    newVertPosition[j] = verts[face.points[j]];  //the origin positin of the dots;
+                    verts[faces[i].points[j]] = verts[faces[i].points[j]]+ normal;         //change the position of the end point
+                    addDot(verts[faces[i].points[j]]);
+                   
+                }
+                 break;
             }
-         
+
         }
         Debug.Log("the start point is" + face.center);
         int index = verts.Count; //get the current number of vert we have;
                                  // Debug.Log("verts number is" + index);
                                  //add verts
-        Vector3 v0 = verts[face.points[0]] + normal;
-        Vector3 v1 = verts[face.points[1]] + normal;
-        Vector3 v2 = verts[face.points[2]] + normal;
-        Vector3 v3 = verts[face.points[3]] + normal;
+        List<int> checker = new List<int>() { face.points[0], face.points[1], face.points[2], face.points[3] };
+        for (int i = 0; i < triangle.Count; i++)    //update the index of the triangle
+        {
+            if (i % 3 == 0 && checker.Contains(triangle[i]) && checker.Contains(triangle[i + 1]) && checker.Contains(triangle[i + 2]))
+            {
+                i++;
+                i++;
+                Debug.Log("enter the do not change place");
+            }
+            else
+            {
+                if (triangle[i] == face.points[0])
+                {
+                    triangle[i] = index;
+                }
+                if (triangle[i] == face.points[1])
+                {
+                    triangle[i] = index + 1;
+                }
+                if (triangle[i] == face.points[2])
+                {
+                    triangle[i] = index + 2;
+                }
+                if (triangle[i] == face.points[3])
+                {
+                    triangle[i] = index + 3;
+                }
+            }
+        }
+      //  List<int> checker = new List<int>(){ index, index + 1, index + 2, index + 3 };
+     //   Debug.Log("the triangle count is" + triangle.Count + ", and it is supposed to be:" + index + 1);
+        /*
+        for(int i = 0; i < triangle.Count / 3; i ++)
+        {
+           // Debug.Log("enter the change place");
+            if (checker.Contains(triangle[3 * i])&& checker.Contains(triangle[3 * i+1])&& checker.Contains(triangle[3 * i+2]))
+            {
+                Debug.Log("enter the change place");
+                if (triangle[i] == index)
+                {
+                    triangle[i] = face.points[0];
+                }
+                if (triangle[i] == index+1)
+                {
+                    triangle[i] = face.points[1];
+                }
+                if (triangle[i] == index+2)
+                {
+                    triangle[i] = face.points[2];
+                }
+                if (triangle[i] == index+3)
+                {
+                    triangle[i] = face.points[3];
+                }
+
+            }
+
+        }
+        */
+        Vector3 v0 = newVertPosition[0];
+        Vector3 v1 = newVertPosition[1];
+        Vector3 v2 = newVertPosition[2];
+        Vector3 v3 = newVertPosition[3];
         verts.Add(v0);
         verts.Add(v1);
         verts.Add(v2);
         verts.Add(v3);
-		addDot (v0);
-		addDot (v1);
-		addDot (v2);
-		addDot (v3);
+
         //add new triangles& faces
         /*
         int[] front = { face.points[0], face.points[1], index + 1, index };
@@ -206,7 +267,7 @@ public class Extrude_cube : MonoBehaviour
         int[] top = { index, index + 1, index + 2, index + 3 };
         GeneFace(top);    //top face;
         */
-        
+
         int[] front = { face.points[0], face.points[3], index + 3, index };
         GeneFace(front);  //front face;
 
@@ -217,10 +278,13 @@ public class Extrude_cube : MonoBehaviour
         GeneFace(right);   //right face;
         int[] left = { face.points[0], index, index + 1, face.points[1] };
         GeneFace(left);   //left face;
-        int[] top = { index + 3, index + 2, index + 1, index };
-        GeneFace(top);    //top face;
+
 
     
+      //  int[] top = { index + 3, index + 2, index + 1, index };
+      //  GeneFace(top);    //top face;
+
+
 
         //refresh the mesh
         Vector3[] vertices = verts.ToArray();
@@ -272,4 +336,5 @@ public class Extrude_cube : MonoBehaviour
         start = outbound;
         end = outbound;
     }
+
 }
