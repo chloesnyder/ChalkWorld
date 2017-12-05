@@ -11,6 +11,7 @@ public class RightController : MonoBehaviour {
 	public GameObject SpawnedCylinder;
 
 	private SteamVR_TrackedController _controller;
+	private GameObject leftController;
 	private bool spawn;
 	private string spawnObj;
 	private bool is_collide = false;
@@ -26,6 +27,7 @@ public class RightController : MonoBehaviour {
 	void Awake()
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
+		//leftController = GameObject.FindGameObjectWithTag ("LeftController");
 	}
 	private void SetCollidingObject(Collider col)
 	{
@@ -133,45 +135,12 @@ public class RightController : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
-		// the Collision contains a lot of info, but it’s the colliding
-		// object we’re most interested in. 
-		Debug.Log("enter collision");
-		Collider collider = collision.collider;
-		// AudioSource.PlayClipAtPoint(appear, Camera.main.transform.position);
-		if (collider.CompareTag("Dot"))
-		{
 
-			is_collide = true;
-
-			// a.transform.rotation = Camera.main.transform.rotation;
-		}
-
-		else
-		{ // if we collided with something else, print to console
-			// what the other thing was
-			Debug.Log("Collided with " + collider.tag);
-		}
 	}
 
 	void OnCollisionExit(Collision collision)
 	{
-		// the Collision contains a lot of info, but it’s the colliding
-		// object we’re most interested in. 
-		Collider collider = collision.collider;
-		// AudioSource.PlayClipAtPoint(appear, Camera.main.transform.position);
-		if (collider.CompareTag("Dot"))
-		{
 
-			is_collide = false;
-
-			// a.transform.rotation = Camera.main.transform.rotation;
-		}
-
-		else
-		{ // if we collided with something else, print to console
-			// what the other thing was
-			Debug.Log("Collided with " + collider.tag);
-		}
 	}
 	public void setSpawn(string obj){
 		spawnObj = obj;
@@ -179,13 +148,13 @@ public class RightController : MonoBehaviour {
 	}
 
 	void SpawnObject(){
-		GameObject spawned;
+		GameObject spawned = null;
 		if (spawnObj.Equals ("Square")) {
 			Debug.Log ("Spawned a cube");
-			spawned = Instantiate (SpawnedCube, Vector3.zero, Quaternion.identity);
+			spawned = Instantiate (SpawnedCube, _controller.transform.position, Quaternion.identity);
 		} else if (spawnObj.Equals ("Circle")) {
 			Debug.Log ("Spawned a cylinder");
-			spawned = Instantiate (SpawnedCylinder, Vector3.zero, Quaternion.identity);
+			spawned = Instantiate (SpawnedCylinder, _controller.transform.position, Quaternion.identity);
 		}
 //		objectInHand = spawned;
 //		collidingObject = null;
