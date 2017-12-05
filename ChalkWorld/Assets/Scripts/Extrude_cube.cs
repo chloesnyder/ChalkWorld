@@ -58,14 +58,16 @@ public class Extrude_cube : MonoBehaviour
 		{
 
 
-			GameObject obj = Instantiate(myDots, transform.TransformPoint(mesh.vertices[i]), transform.rotation) as GameObject;
-			obj.GetComponent<DotController> ().cube = gameObject;
-			dots.Add(obj);
+			//GameObject obj = Instantiate(myDots, transform.TransformPoint(mesh.vertices[i]), transform.rotation) as GameObject;
+			//obj.GetComponent<DotController> ().cube = gameObject;
+			//dots.Add(obj);
+			addDot (mesh.vertices [i]);
 
 		}
 	}
 	private void addDot(Vector3 point){
 		GameObject obj = Instantiate(myDots, transform.TransformPoint(point), transform.rotation) as GameObject;
+		obj.transform.parent = this.transform;
 		obj.GetComponent<DotController> ().cube = gameObject;
 		dots.Add(obj);
 	}
