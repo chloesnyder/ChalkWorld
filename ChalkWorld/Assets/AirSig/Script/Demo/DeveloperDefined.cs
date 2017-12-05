@@ -50,10 +50,10 @@ public class DeveloperDefined : BasedGestureHandle {
             AirSigManager.PressOrTouch.PRESS);
 
 
-        airsigManager.SetTriggerStartKeys(
-            AirSigManager.Controller.LEFT_HAND,
-            SteamVR_Controller.ButtonMask.Touchpad,
-            AirSigManager.PressOrTouch.PRESS);
+//        airsigManager.SetTriggerStartKeys(
+//            AirSigManager.Controller.LEFT_HAND,
+//			SteamVR_Controller.ButtonMask.Trigger,
+//            AirSigManager.PressOrTouch.PRESS);
 
 		rc = GameObject.FindGameObjectWithTag ("RightController").GetComponent<RightController> ();
     }
