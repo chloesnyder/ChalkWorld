@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class CubeMesh : MonoBehaviour {
     public Vector3[] verts;
+
     public GameObject myDots;
     private int count = 0;
     private GameObject[] dots = new GameObject[8];
@@ -14,21 +15,6 @@ public class CubeMesh : MonoBehaviour {
     void Start () {
         CreateCube();
         CreateSphere();
-       // dots = new GameObject[8];
-       // lines = new List<GameObject>();
-        /*
-        dots.Capacity = 8;
-        lines.Capacity = 4;
-      
-        for(int i = 0; i < 8; i++)
-        {
-            dots[i] = new GameObject();
-        }
-        for(int i = 0; i < 4; i++)
-        {
-            lines[i] = new GameObject();
-        }
-        */
     }
     void OnMouseDown()
     {

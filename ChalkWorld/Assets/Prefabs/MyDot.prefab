@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 23913727501057060}
   - component: {fileID: 54966259450682772}
   - component: {fileID: 114361244298107786}
-  - component: {fileID: 114803780249120460}
   - component: {fileID: 65703871118885028}
   m_Layer: 0
   m_Name: MyDot
@@ -41,7 +40,7 @@ Transform:
   m_GameObject: {fileID: 1015063895675818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.18294287, y: 0.9540841, z: -0.39590645}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -125,17 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 195dfbb8cfdd3b74e899f9092d79fce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114803780249120460
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1015063895675818}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 195dfbb8cfdd3b74e899f9092d79fce6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  cube: {fileID: 0}
 --- !u!135 &135758795098459976
 SphereCollider:
   m_ObjectHideFlags: 1

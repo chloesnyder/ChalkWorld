@@ -6,6 +6,8 @@ public class Extrude_cube : MonoBehaviour
 {
 
     // Use this for initialization
+	public List<GameObject> dots=new List<GameObject>();
+	public GameObject myDots;
     public struct Face
     {
         public Vector3 center;
@@ -30,19 +32,15 @@ public class Extrude_cube : MonoBehaviour
         start = outbound;
         end = outbound;
         CreatPlane();
+		CreateSphere ();
         Mesh mesh = GetComponent<MeshFilter>().mesh;
+		GetComponent<MeshCollider>().sharedMesh = mesh;
         // Debug.Log("triangle number is" + mesh.triangles.Length);
-        for (int i = 0; i < mesh.vertices.Length; i++)
-            // Debug.Log(mesh.vertices[i]);
-            GetComponent<MeshCollider>().sharedMesh = mesh;
-        
-        for (int i = 0; i < faces.Count; i++)
-        {
-            //  Debug.Log("face center is:" + faces[i].center);
-        }
+     
         Vector3 start1 = new Vector3(0, 0.1f, 0);
         Vector3 end1 = new Vector3(0, 1.2f, 0);
       //  Extrude(start1, end1);
+
 
     }
 
@@ -51,7 +49,42 @@ public class Extrude_cube : MonoBehaviour
     {
 
     }
+	private void CreateSphere()
+	{
+		Mesh mesh = GetComponent<MeshFilter>().mesh;
 
+		Debug.Log(mesh.vertices[0]);
+		for (int i = 0; i < mesh.vertices.Length; i++)
+		{
+
+
+			GameObject obj = Instantiate(myDots, transform.TransformPoint(mesh.vertices[i]), transform.rotation) as GameObject;
+			obj.GetComponent<DotController> ().cube = gameObject;
+			dots.Add(obj);
+
+		}
+	}
+	private void addDot(Vector3 point){
+		GameObject obj = Instantiate(myDots, transform.TransformPoint(point), transform.rotation) as GameObject;
+		obj.GetComponent<DotController> ().cube = gameObject;
+		dots.Add(obj);
+	}
+
+
+	public void Die(){
+		Destroy(gameObject);
+		GameObject obj = GameObject.Find("GlobalObject");
+		Global g = obj.GetComponent<Global>();
+		for(int i=0;i<dots.Count;i++){
+			Destroy(dots[i]);
+		}
+
+		for(int i = 0; i < g.lines.Capacity; i++)
+		{
+			Destroy(g.lines[i]);
+		}
+
+	}
     private void CreatPlane()
     {
         Vector3[] vertices = {
@@ -154,7 +187,10 @@ public class Extrude_cube : MonoBehaviour
         verts.Add(v1);
         verts.Add(v2);
         verts.Add(v3);
-
+		addDot (v0);
+		addDot (v1);
+		addDot (v2);
+		addDot (v3);
         //add new triangles& faces
         /*
         int[] front = { face.points[0], face.points[1], index + 1, index };

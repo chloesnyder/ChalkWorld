@@ -54,13 +54,9 @@ public class LeftController : MonoBehaviour {
     // 2
     public void OnTriggerStay(Collider other)
     {
-       // Debug.Log("trigger stay");
-       // SetCollidingObject(other);
-		//if (other.CompareTag ("Cube")) {
 			
 			SetCollidingObject (other);
-			//other.gameObject.GetComponent<CubeMesh>().Die ();
-		//}
+
 
     }
 
@@ -73,9 +69,9 @@ public class LeftController : MonoBehaviour {
             return;
         }
 		if(other.CompareTag ("Dot")){
-			
+			is_collide = false;
 		}
-        is_collide = false;
+       
         collidingObject = null;
     }
     private void GrabObject()
@@ -146,18 +142,6 @@ public class LeftController : MonoBehaviour {
                     start = far;
                 
             }
-            /*
-            else if (objToErease!=null&& collidingObject!=null&&collidingObject.CompareTag("Dot"))
-            {
-                GameObject obj = GameObject.Find("GlobalObject");
-                Global g = obj.GetComponent<Global>();
-                g.end = gameObject.transform.position;
-                g.selected = false;
-                g.color = new Color(0.2f, 1, 0.4f);
-                g.DrawLine(g.start, g.end, g.color);
-                Debug.Log("start is" + g.start + "and end is " + g.end);
-            }
-            */
             else
             {
                 Debug.Log("obj to extrude is null");
@@ -202,9 +186,10 @@ public class LeftController : MonoBehaviour {
                 }
                 Debug.Log("the start point to extrude is" + start);
                 objToextrude = collidingObject;
+				status = false;
             }
             
-            else if (collidingObject.CompareTag("Dot"))
+             if (collidingObject.CompareTag("Dot"))
             {
 				if (is_collide == true) {
 					if (status == false) {
@@ -219,9 +204,9 @@ public class LeftController : MonoBehaviour {
 						g.color = new Color (0.2f, 1, 0.4f);
 						g.DrawLine (g.start, g.end, g.color);
 						Debug.Log ("start is" + g.start + "and end is " + g.end);
-						if(g.count==4){
+						if(g.count>=4){
 
-							collidingObject.GetComponent<DotController> ().cube.GetComponent<CubeMesh> ().Die ();
+							collidingObject.GetComponent<DotController> ().cube.GetComponent<Extrude_cube> ().Die ();
 							g.count = 0;
 							collidingObject = null;
 							// Destroy(gameObject);
