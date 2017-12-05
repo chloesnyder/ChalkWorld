@@ -53,6 +53,7 @@ public class CubeMesh : MonoBehaviour {
             // instantiate the Bullet
             transform.TransformPoint(verts[i]);
              GameObject obj = Instantiate(myDots, transform.TransformPoint(verts[i]), transform.rotation) as GameObject;
+			obj.GetComponent<DotController> ().cube = gameObject;
             //  dots[i]=Instantiate(myDots, transform.TransformPoint(verts[i]), transform.rotation) as GameObject;
             // get the Bullet Script Component of the new Bullet instance
             // DotsController b = dots[i].GetComponent<DotsController>();
@@ -123,7 +124,7 @@ public class CubeMesh : MonoBehaviour {
         Global g = obj.GetComponent<Global>();
         if (g.count == 4)
         {
-			Die ();
+			//Die ();
         }
 	}
 	public void Die(){

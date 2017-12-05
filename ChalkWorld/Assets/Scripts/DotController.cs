@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DotController : MonoBehaviour {
 
+	public GameObject cube;
 	// Use this for initialization
 	void Start () {
 		

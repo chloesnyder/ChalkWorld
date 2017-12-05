@@ -177,22 +177,7 @@ public class LeftController : MonoBehaviour {
 		Global g = obj.GetComponent<Global>();
 		bool status = g.selected;
 		
-		if (is_collide == true) {
-			if (status == false) {
-				Debug.Log ("status false");
-				g.selected = true;
-				g.start = gameObject.transform.position;
-				// Destroy(gameObject);
-			} else {
-				Debug.Log ("status true");
-				g.end = gameObject.transform.position;
-				g.selected = false;
-				g.color = new Color (0.2f, 1, 0.4f);
-				g.DrawLine (g.start, g.end, g.color);
-				Debug.Log ("start is" + g.start + "and end is " + g.end);
-				// Destroy(gameObject);
-			}
-		}
+
         
         if (collidingObject != null)
         {
@@ -218,15 +203,33 @@ public class LeftController : MonoBehaviour {
                 Debug.Log("the start point to extrude is" + start);
                 objToextrude = collidingObject;
             }
-            /*
+            
             else if (collidingObject.CompareTag("Dot"))
             {
-                Debug.Log("start point of dot");
-                g.selected = true;
-                g.start = gameObject.transform.position;
-                objToErease = collidingObject;
+				if (is_collide == true) {
+					if (status == false) {
+						Debug.Log ("status false");
+						g.selected = true;
+						g.start = gameObject.transform.position;
+						// Destroy(gameObject);
+					} else {
+						Debug.Log ("status true");
+						g.end = gameObject.transform.position;
+						g.selected = false;
+						g.color = new Color (0.2f, 1, 0.4f);
+						g.DrawLine (g.start, g.end, g.color);
+						Debug.Log ("start is" + g.start + "and end is " + g.end);
+						if(g.count==4){
+
+							collidingObject.GetComponent<DotController> ().cube.GetComponent<CubeMesh> ().Die ();
+							g.count = 0;
+							collidingObject = null;
+							// Destroy(gameObject);
+						}
+					}
+				}
             }
-            */
+            
         }
         else
         {
@@ -289,7 +292,7 @@ public class LeftController : MonoBehaviour {
         {
             if (collidingObject)
             {
-                GrabObject();
+               // GrabObject();
             }
         }
 
