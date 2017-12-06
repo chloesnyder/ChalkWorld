@@ -18,6 +18,10 @@ public class EX_TEST : MonoBehaviour {
             this.points = points;
 
         }
+        public void SetCenter(Vector3 center)
+        {
+            this.center = center;
+        }
     }
     public List<Face> faces = new List<Face>();
     public List<Vector3> verts = new List<Vector3>();
@@ -37,7 +41,7 @@ public class EX_TEST : MonoBehaviour {
 
         Vector3 start1 = new Vector3(0.5f, 0, 0);
         Vector3 end1 = new Vector3(1, 1.2f, 0);
-        Extrude(start1, end1);
+       // Extrude(start1, end1);
 
 
     }
@@ -178,6 +182,7 @@ public class EX_TEST : MonoBehaviour {
                     addDot(verts[faces[i].points[j]]);
                    
                 }
+                faces[i].SetCenter( (verts[faces[i].points[0]] + verts[faces[i].points[1]] + verts[faces[i].points[2]] + verts[faces[i].points[3]]) / 4);
                  break;
             }
 
