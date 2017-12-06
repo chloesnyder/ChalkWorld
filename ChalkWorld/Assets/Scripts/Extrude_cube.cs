@@ -36,10 +36,18 @@ public class Extrude_cube : MonoBehaviour
         Mesh mesh = GetComponent<MeshFilter>().mesh;
 		GetComponent<MeshCollider>().sharedMesh = mesh;
         // Debug.Log("triangle number is" + mesh.triangles.Length);
-     
-        Vector3 start1 = new Vector3(0, 0.1f, 0);
+
+
+        Vector3 start1 = new Vector3(0, 0.5f, 0);
         Vector3 end1 = new Vector3(0, 1.2f, 0);
-       Extrude(start1, end1);
+        Extrude(start1, end1);
+
+        start1 = new Vector3(0, 1.2f, 0);
+        end1 = new Vector3(0, 2.2f, 0);
+        Extrude(start1, end1);
+        start1 = new Vector3(0.5f, 0, 0);
+        end1 = new Vector3(1.5f, 0, 0);
+        Extrude(start1, end1);
 
 
     }
@@ -138,7 +146,7 @@ public class Extrude_cube : MonoBehaviour
         int[] index = { 0, 1, 2, 3 };
         faces.Add(new Face(new Vector3(0, 0, -0.5f), index));
         int[] index2 = { 2, 5, 4, 3 };
-        faces.Add(new Face(new Vector3(0, 0.1f, 0), index2));
+        faces.Add(new Face(new Vector3(0, 0.5f, 0), index2));
         int[] index3 = { 1, 6, 5, 2 };
         faces.Add(new Face(new Vector3(0.5f, 0, 0), index3));
         int[] index4 = { 0, 3, 4, 7 };
@@ -146,7 +154,7 @@ public class Extrude_cube : MonoBehaviour
         int[] index5 = {  5, 6, 7,4 };
         faces.Add(new Face(new Vector3(0, 0, 0.5f), index5));
         int[] index6 = { 0, 7, 6, 1 };
-        faces.Add(new Face(new Vector3(0, -0.1f, 0), index6));
+        faces.Add(new Face(new Vector3(0, -0.5f, 0), index6));
     }
     void GeneFace(int[] v)
     {

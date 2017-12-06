@@ -21,6 +21,7 @@ public class EX_TEST : MonoBehaviour {
         public void SetCenter(Vector3 center)
         {
             this.center = center;
+            Debug.Log("center is----------------" + this.center);
         }
     }
     public List<Face> faces = new List<Face>();
@@ -39,9 +40,16 @@ public class EX_TEST : MonoBehaviour {
         GetComponent<MeshCollider>().sharedMesh = mesh;
         // Debug.Log("triangle number is" + mesh.triangles.Length);
 
-        Vector3 start1 = new Vector3(0.5f, 0, 0);
-        Vector3 end1 = new Vector3(1, 1.2f, 0);
-       // Extrude(start1, end1);
+        Vector3 start1 = new Vector3(0, 0.5f, 0);
+        Vector3 end1 = new Vector3(0, 1.2f, 0);
+        Extrude(start1, end1);
+
+        start1 = new Vector3(0, 1.2f, 0);
+         end1 = new Vector3(0, 2.2f, 0);
+        Extrude(start1, end1);
+        start1 = new Vector3(0.5f, 0, 0);
+        end1 = new Vector3(1.5f, 0, 0);
+        Extrude(start1, end1);
 
 
     }
@@ -173,7 +181,7 @@ public class EX_TEST : MonoBehaviour {
             count++;
             if (faces[i].center == start)
             {
-                Debug.Log("------------------------can find the extrude start point");
+                Debug.Log("------------------------can find the extrude start point:"+i);
                 face = faces[i];
                 for(int j = 0; j < 4; j++)
                 {
@@ -182,7 +190,13 @@ public class EX_TEST : MonoBehaviour {
                     addDot(verts[faces[i].points[j]]);
                    
                 }
-                faces[i].SetCenter( (verts[faces[i].points[0]] + verts[faces[i].points[1]] + verts[faces[i].points[2]] + verts[faces[i].points[3]]) / 4);
+                // faces[i].SetCenter(end);
+                Face newFace = new Face(end, face.points);
+                faces.Remove(face);
+                faces.Add(newFace);
+                Debug.Log("new center is supposed to be" + end);
+                Debug.Log("new center is" +newFace.center);
+                
                  break;
             }
 
@@ -260,7 +274,7 @@ public class EX_TEST : MonoBehaviour {
         verts.Add(v3);
 
         //add new triangles& faces
-        /*
+      /*  
         int[] front = { face.points[0], face.points[1], index + 1, index };
         GeneFace(front);  //front face;
         int[] bank = { face.points[2], face.points[3], index + 3, index + 2 };
@@ -269,10 +283,10 @@ public class EX_TEST : MonoBehaviour {
         GeneFace(right);   //right face;
         int[] left = { face.points[3], face.points[0], index, index + 3 };
         GeneFace(left);   //left face;
-        int[] top = { index, index + 1, index + 2, index + 3 };
-        GeneFace(top);    //top face;
+      //  int[] top = { index, index + 1, index + 2, index + 3 };
+       // GeneFace(top);    //top face;
         */
-
+        
         int[] front = { face.points[0], face.points[3], index + 3, index };
         GeneFace(front);  //front face;
 
@@ -283,7 +297,7 @@ public class EX_TEST : MonoBehaviour {
         GeneFace(right);   //right face;
         int[] left = { face.points[0], index, index + 1, face.points[1] };
         GeneFace(left);   //left face;
-
+        
 
     
       //  int[] top = { index + 3, index + 2, index + 1, index };

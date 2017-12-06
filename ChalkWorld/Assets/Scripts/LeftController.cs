@@ -141,7 +141,7 @@ public class LeftController : MonoBehaviour {
 
 					Vector3 triggerPoint = transform.position;
 					end = objToextrude.transform.InverseTransformPoint (triggerPoint);
-					Extrude_cube extrude = objToextrude.GetComponent<Extrude_cube> ();
+                    Extrude_cube extrude = objToextrude.GetComponent<Extrude_cube> ();
 					extrude.Extrude (start, end);
 					start = far;
                 
@@ -175,7 +175,7 @@ public class LeftController : MonoBehaviour {
 					Vector3 triggerplace = transform.position;
 					Vector3 localtrigger = collidingObject.transform.InverseTransformPoint (triggerplace);
 					Debug.Log ("the trigger in cube space is" + localtrigger);
-					Extrude_cube extrude = collidingObject.GetComponent<Extrude_cube> ();
+                    Extrude_cube extrude = collidingObject.GetComponent<Extrude_cube> ();
                
 					start = extrude.faces [0].center;
 					float distance = (localtrigger - start).magnitude;
