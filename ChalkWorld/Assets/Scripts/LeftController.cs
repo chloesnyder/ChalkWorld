@@ -159,7 +159,7 @@ public class LeftController : MonoBehaviour {
 				}
 			}
 
-             if (objToextrude.CompareTag("Cylinder"))
+             if (objToextrude != null&&objToextrude.CompareTag("Cylinder"))
             {
                 Debug.Log("set the scale111111111111111111111111");
                 Vector3 triggerPoint = transform.position;
