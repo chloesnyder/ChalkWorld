@@ -32,6 +32,11 @@ public class LeftController : MonoBehaviour {
     private void SetCollidingObject(Collider col)
     {
         // 1
+        if (col.CompareTag("Dot"))
+        {
+            collidingObject = col.gameObject;
+            Debug.Log("set the colliding object");
+        }
         if (collidingObject || !col.GetComponent<Rigidbody>())
         {
             return;
@@ -138,12 +143,20 @@ public class LeftController : MonoBehaviour {
 			if (start != far) {        //get one point to extrude;
             
 				if (objToextrude != null) {
-
-					Vector3 triggerPoint = transform.position;
-					end = objToextrude.transform.InverseTransformPoint (triggerPoint);
-                    Extrude_cube extrude = objToextrude.GetComponent<Extrude_cube> ();
-					extrude.Extrude (start, end);
-					start = far;
+                    if (objToextrude.CompareTag("Ecube"))
+                    {
+                        Vector3 triggerPoint = transform.position;
+                        end = objToextrude.transform.InverseTransformPoint(triggerPoint);
+                        Extrude_cube extrude = objToextrude.GetComponent<Extrude_cube>();
+                        extrude.Extrude(start, end);
+                        start = far;
+                    }
+                    else if (objToextrude.CompareTag("Cylinder"))
+                    {
+                        Vector3 triggerPoint = transform.position;
+                        end = objToextrude.transform.InverseTransformPoint(triggerPoint);
+                        objToextrude.transform.localScale.Set(end.x,end.y,end.z);
+                    }
                 
 				} else {
 					Debug.Log ("obj to extrude is null");
@@ -187,12 +200,21 @@ public class LeftController : MonoBehaviour {
 					}
 					Debug.Log ("the start point to extrude is" + start);
 					objToextrude = collidingObject;
-					status = false;
-				}
+                    g.selected = false;
+                }
+
+                else if (collidingObject.CompareTag("Cylinder"))
+                {
+                    Debug.Log("trigger clicked extude Cylinder");
+                    //get the start point
+                    objToextrude = collidingObject;
+                    g.selected = false;
+                }
             
-				if (collidingObject.CompareTag ("Dot")) {
-					if (is_collide == true) {
+				else if (collidingObject.CompareTag ("Dot")) {
+					//if (is_collide == true) {
 						if (status == false) {
+                            status = true;
 							Debug.Log ("status false");
 							g.selected = true;
 							g.start = gameObject.transform.position;
@@ -212,7 +234,7 @@ public class LeftController : MonoBehaviour {
 								// Destroy(gameObject);
 							}
 						}
-					}
+					//}
 				}
             
 			} else {
@@ -225,7 +247,7 @@ public class LeftController : MonoBehaviour {
      
 	}
 
-
+    /*
 	void OnCollisionEnter(Collision collision)
     {
         // the Collision contains a lot of info, but it’s the colliding
@@ -271,7 +293,7 @@ public class LeftController : MonoBehaviour {
             Debug.Log("Collided with " + collider.tag);
         }
     }
-  
+  */
 
     // Update is called once per frame
     void Update () {
