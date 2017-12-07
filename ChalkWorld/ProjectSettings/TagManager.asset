@@ -11,6 +11,8 @@ TagManager:
   - CameraRig
   - RightController
   - Ecube
+  - Cylinder
+  - DrawingHand
   layers:
   - Default
   - TransparentFX

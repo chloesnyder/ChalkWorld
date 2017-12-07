@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using VRTK;
 
 public class MenuScript : MonoBehaviour { 
@@ -20,16 +21,53 @@ public class MenuScript : MonoBehaviour {
 
     bool menuActive;
 
+    // UI elts
+    public Text cubeNumText;
+    public Text cylinderNumText;
+    public Button cubeButton;
+    public Button cylinderButton;
+    public Toggle eraseModecheckBox;
+
+    public GameObject rightControllerObject;
+
+    RightController rc;
 
 
-	// Use this for initialization
-	void Start () {
-        menuActive = false;
-        numCubes = 5;
-        numCylinders = 5;
-	}
+    //Use this for initialization
 
-    void Update()
+   void Start () {
+
+       menuActive = false;
+
+       numCubes = 5;
+
+       numCylinders = 5;
+
+
+       cylinderNumText.text = numCylinders.ToString();
+
+       cubeNumText.text = numCubes.ToString();
+
+
+       cubeButton.onClick.AddListener(cubePressed);
+
+       cylinderButton.onClick.AddListener(cylinderPressed);
+
+        rc = rightControllerObject.GetComponent<RightController>(); //GameObject.FindGameObjectWithTag("DrawingHand").GetComponent<RightController>();
+        
+        if (rc)
+        {
+
+           Debug.Log("what the fuck it's there...");
+        }
+
+    // eraseModecheckBox.onValueChanged
+    }
+
+
+
+
+void Update()
     {
         menu.SetActive(menuActive);
         pointer.enabled = menuActive;
@@ -37,6 +75,8 @@ public class MenuScript : MonoBehaviour {
 
         pointer.pointerRenderer.enabled = menuActive;
 
+        cylinderNumText.text = numCylinders.ToString();
+        cubeNumText.text = numCubes.ToString();
 
     }
 
@@ -55,25 +95,27 @@ public class MenuScript : MonoBehaviour {
 	}
 
 
-    public void cubePressed()
+    void cubePressed()
     {
         // enables drawing a cube, takes a cube out of inventory
+        // rightControllerScript.setSpawn("Square");
+        rc.setSpawn("Square");
         numCubes--;
         canDrawCube = true;
         canDrawCylinder = false;
     }
 
-    public void cylinderPressed()
+    void cylinderPressed()
     {
-        // enables drawing a cube, takes a cube out of inventory
+        rc.setSpawn("Circle");
         numCylinders--;
         canDrawCube = false;
         canDrawCylinder = true;
     }
 
-    public void eraseModeToggled(bool val)
+    void eraseModeToggled()
     {
-        eraseMode = val;
+        eraseMode = !eraseMode;
     }
 
 

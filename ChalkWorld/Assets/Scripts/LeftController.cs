@@ -141,28 +141,35 @@ public class LeftController : MonoBehaviour {
         Debug.Log("uncliceked trigger");
 		if (editing) {
 			if (start != far) {        //get one point to extrude;
-            
+                Debug.Log("current tag is " + objToextrude.tag);
 				if (objToextrude != null) {
                     if (objToextrude.CompareTag("Ecube"))
                     {
+                        Debug.Log("why is it in here??");
                         Vector3 triggerPoint = transform.position;
                         end = objToextrude.transform.InverseTransformPoint(triggerPoint);
                         Extrude_cube extrude = objToextrude.GetComponent<Extrude_cube>();
                         extrude.Extrude(start, end);
                         start = far;
                     }
-                    else if (objToextrude.CompareTag("Cylinder"))
-                    {
-                        Vector3 triggerPoint = transform.position;
-                        end = objToextrude.transform.InverseTransformPoint(triggerPoint);
-                        objToextrude.transform.localScale.Set(end.x,end.y,end.z);
-                    }
+                   
                 
 				} else {
 					Debug.Log ("obj to extrude is null");
 				}
 			}
-			start = far;
+
+             if (objToextrude.CompareTag("Cylinder"))
+            {
+                Debug.Log("set the scale111111111111111111111111");
+                Vector3 triggerPoint = transform.position;
+                end = objToextrude.transform.InverseTransformPoint(triggerPoint);
+                Debug.Log("the end point to extrude is" + end);
+                objToextrude.transform.localScale += new Vector3(Mathf.Abs(end.x)/5, Mathf.Abs(end.y)/5, Mathf.Abs(end.z)/5);
+                Debug.Log("set the scale111111111111111111111111");
+
+            }
+            start = far;
 			objToextrude = null;
 			objToErease = null;
 		} else {
@@ -247,18 +254,20 @@ public class LeftController : MonoBehaviour {
      
 	}
 
-    /*
+    
 	void OnCollisionEnter(Collision collision)
     {
         // the Collision contains a lot of info, but it’s the colliding
         // object we’re most interested in. 
 		Debug.Log("enter collision");
         Collider collider = collision.collider;
+        collidingObject = collider.gameObject;
         // AudioSource.PlayClipAtPoint(appear, Camera.main.transform.position);
         if (collider.CompareTag("Dot"))
         {
            
             is_collide = true;
+           
 
             // a.transform.rotation = Camera.main.transform.rotation;
         }
@@ -292,8 +301,9 @@ public class LeftController : MonoBehaviour {
           // what the other thing was
             Debug.Log("Collided with " + collider.tag);
         }
+        collidingObject = null;
     }
-  */
+  
 
     // Update is called once per frame
     void Update () {

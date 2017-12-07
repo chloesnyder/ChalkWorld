@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 64928816611502764}
   - component: {fileID: 54922875290870896}
   - component: {fileID: 114333220739595470}
+  - component: {fileID: 114568021842153616}
   m_Layer: 0
   m_Name: EX-Cube
   m_TagString: Ecube
@@ -133,9 +134,26 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1764671538770282}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a869097bdd66cf042a93d73080f1a882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dots: []
+  myDots: {fileID: 1015063895675818, guid: 3df5a26fd63671849ac0ef91692f830a, type: 2}
+  verts: []
+  triangle: 
+  start: {x: 0, y: 0, z: 0}
+  end: {x: 0, y: 0, z: 0}
+--- !u!114 &114568021842153616
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1764671538770282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c4f185c2a79f884eb8e9fd918d3665e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dots: []

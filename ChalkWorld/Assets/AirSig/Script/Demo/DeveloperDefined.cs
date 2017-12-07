@@ -55,7 +55,7 @@ public class DeveloperDefined : BasedGestureHandle {
 //			SteamVR_Controller.ButtonMask.Trigger,
 //            AirSigManager.PressOrTouch.PRESS);
 
-		rc = GameObject.FindGameObjectWithTag ("RightController").GetComponent<RightController> ();
+		rc = GameObject.FindGameObjectWithTag ("DrawingHand").GetComponent<RightController> ();
     }
 
 
