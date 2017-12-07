@@ -143,12 +143,20 @@ public class LeftController : MonoBehaviour {
 			if (start != far) {        //get one point to extrude;
             
 				if (objToextrude != null) {
-
-					Vector3 triggerPoint = transform.position;
-					end = objToextrude.transform.InverseTransformPoint (triggerPoint);
-                    Extrude_cube extrude = objToextrude.GetComponent<Extrude_cube> ();
-					extrude.Extrude (start, end);
-					start = far;
+                    if (objToextrude.CompareTag("Ecube"))
+                    {
+                        Vector3 triggerPoint = transform.position;
+                        end = objToextrude.transform.InverseTransformPoint(triggerPoint);
+                        Extrude_cube extrude = objToextrude.GetComponent<Extrude_cube>();
+                        extrude.Extrude(start, end);
+                        start = far;
+                    }
+                    else if (objToextrude.CompareTag("Cylinder"))
+                    {
+                        Vector3 triggerPoint = transform.position;
+                        end = objToextrude.transform.InverseTransformPoint(triggerPoint);
+                        objToextrude.transform.localScale.Set(end.x,end.y,end.z);
+                    }
                 
 				} else {
 					Debug.Log ("obj to extrude is null");
@@ -194,8 +202,16 @@ public class LeftController : MonoBehaviour {
 					objToextrude = collidingObject;
                     g.selected = false;
                 }
+
+                else if (collidingObject.CompareTag("Cylinder"))
+                {
+                    Debug.Log("trigger clicked extude Cylinder");
+                    //get the start point
+                    objToextrude = collidingObject;
+                    g.selected = false;
+                }
             
-				if (collidingObject.CompareTag ("Dot")) {
+				else if (collidingObject.CompareTag ("Dot")) {
 					//if (is_collide == true) {
 						if (status == false) {
                             status = true;
