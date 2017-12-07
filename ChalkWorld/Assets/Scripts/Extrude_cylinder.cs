@@ -41,7 +41,7 @@ public class Extrude_cylinder : MonoBehaviour {
         GameObject obj = Instantiate(myDots, transform.TransformPoint(point), transform.rotation) as GameObject;
         obj.transform.parent = this.transform;
         obj.GetComponent<DotController>().cube = gameObject;
-        obj.transform.localScale *= 0.5f;
+       // obj.transform.localScale *= 0.5f;
         dots.Add(obj);
     }
     // Update is called once per frame

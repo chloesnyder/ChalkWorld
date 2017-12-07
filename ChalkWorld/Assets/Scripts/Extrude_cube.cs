@@ -37,7 +37,7 @@ public class Extrude_cube : MonoBehaviour
 		GetComponent<MeshCollider>().sharedMesh = mesh;
         // Debug.Log("triangle number is" + mesh.triangles.Length);
 
-
+        /*
         Vector3 start1 = new Vector3(0, 0.5f, 0);
         Vector3 end1 = new Vector3(0, 1.2f, 0);
         Extrude(start1, end1);
@@ -48,7 +48,7 @@ public class Extrude_cube : MonoBehaviour
         start1 = new Vector3(0.5f, 0, 0);
         end1 = new Vector3(1.5f, 0, 0);
         Extrude(start1, end1);
-
+        */
 
     }
 
@@ -61,7 +61,7 @@ public class Extrude_cube : MonoBehaviour
 	{
 		Mesh mesh = GetComponent<MeshFilter>().mesh;
 
-		Debug.Log(mesh.vertices[0]);
+		//Debug.Log(mesh.vertices[0]);
 		for (int i = 0; i < mesh.vertices.Length; i++)
 		{
 
@@ -179,13 +179,13 @@ public class Extrude_cube : MonoBehaviour
             count++;
             if (faces[i].center == start)
             {
-                Debug.Log("------------------------can find the extrude start point");
+               // Debug.Log("------------------------can find the extrude start point");
                 face = faces[i];
                // break;
             }
          
         }
-        Debug.Log("the start point is" + face.center);
+        Debug.Log("the start point real in extrude is" + face.center);
         int index = verts.Count; //get the current number of vert we have;
                                  // Debug.Log("verts number is" + index);
                                  //add verts

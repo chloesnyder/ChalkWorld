@@ -35,7 +35,7 @@ public class LeftController : MonoBehaviour {
         if (col.CompareTag("Dot"))
         {
             collidingObject = col.gameObject;
-            Debug.Log("set the colliding object");
+          //  Debug.Log("set the colliding object");
         }
         if (collidingObject || !col.GetComponent<Rigidbody>())
         {
@@ -43,13 +43,13 @@ public class LeftController : MonoBehaviour {
         }
         // 2
         collidingObject = col.gameObject;
-        Debug.Log("set the colliding object");
+     //   Debug.Log("set the colliding object");
 
     }
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger enter");
-		Debug.Log ("" + other.tag);
+      //  Debug.Log("trigger enter");
+	//	Debug.Log ("" + other.tag);
 		if(other.CompareTag ("Dot")){
 			is_collide = true;
 		}
@@ -69,7 +69,7 @@ public class LeftController : MonoBehaviour {
     // 3
     public void OnTriggerExit(Collider other)
     {
-        Debug.Log("trigger exit");
+       // Debug.Log("trigger exit");
         if (!collidingObject)
         {
             return;
@@ -83,7 +83,7 @@ public class LeftController : MonoBehaviour {
     private void GrabObject()
     {
         // 1
-			Debug.Log ("in grab");
+		//	Debug.Log ("in grab");
 			objectInHand = collidingObject;
 			collidingObject = null;
 			// 2
@@ -101,7 +101,7 @@ public class LeftController : MonoBehaviour {
     }
     private void ReleaseObject()
     {
-        Debug.Log("in release");
+       // Debug.Log("in release");
         // 1
 			if (GetComponent<FixedJoint> ()) {
 				// 2
@@ -138,14 +138,14 @@ public class LeftController : MonoBehaviour {
 	}
     private void HandleTriggerUnClicked(object sender, ClickedEventArgs e)
     {
-        Debug.Log("uncliceked trigger");
+      //  Debug.Log("uncliceked trigger");
 		if (editing) {
 			if (start != far) {        //get one point to extrude;
-                Debug.Log("current tag is " + objToextrude.tag);
+             //   Debug.Log("current tag is " + objToextrude.tag);
 				if (objToextrude != null) {
                     if (objToextrude.CompareTag("Ecube"))
                     {
-                        Debug.Log("why is it in here??");
+                       
                         Vector3 triggerPoint = transform.position;
                         end = objToextrude.transform.InverseTransformPoint(triggerPoint);
                         Extrude_cube extrude = objToextrude.GetComponent<Extrude_cube>();
@@ -161,12 +161,12 @@ public class LeftController : MonoBehaviour {
 
              if (objToextrude != null&&objToextrude.CompareTag("Cylinder"))
             {
-                Debug.Log("set the scale111111111111111111111111");
+             
                 Vector3 triggerPoint = transform.position;
                 end = objToextrude.transform.InverseTransformPoint(triggerPoint);
                 Debug.Log("the end point to extrude is" + end);
                 objToextrude.transform.localScale += new Vector3(Mathf.Abs(end.x)/5, Mathf.Abs(end.y)/5, Mathf.Abs(end.z)/5);
-                Debug.Log("set the scale111111111111111111111111");
+              
 
             }
             start = far;
@@ -181,7 +181,7 @@ public class LeftController : MonoBehaviour {
     private void HandleTriggerClicked(object sender, ClickedEventArgs e)
 	{
         // this object was clicked - do something
-        Debug.Log("cliceked trigger");
+      //  Debug.Log("cliceked trigger");
         GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
 		bool status = g.selected;
@@ -190,7 +190,7 @@ public class LeftController : MonoBehaviour {
         
 			if (collidingObject != null) {
 				if (collidingObject.CompareTag ("Ecube")) {
-					Debug.Log ("trigger clicked extude cube");
+					//Debug.Log ("trigger clicked extude cube");
 					//get the start point
 					Vector3 triggerplace = transform.position;
 					Vector3 localtrigger = collidingObject.transform.InverseTransformPoint (triggerplace);
@@ -203,6 +203,7 @@ public class LeftController : MonoBehaviour {
 						float length = (extrude.faces [i].center - localtrigger).magnitude;
 						if (distance > length) {
 							start = extrude.faces [i].center;
+                            distance = length;
 						}
 					}
 					Debug.Log ("the start point to extrude is" + start);
@@ -222,21 +223,27 @@ public class LeftController : MonoBehaviour {
 					//if (is_collide == true) {
 						if (status == false) {
                             status = true;
-							Debug.Log ("status false");
+						//	Debug.Log ("status false");
 							g.selected = true;
 							g.start = gameObject.transform.position;
 							// Destroy(gameObject);
 						} else {
-							Debug.Log ("status true");
+						//	Debug.Log ("status true");
 							g.end = gameObject.transform.position;
 							g.selected = false;
 							g.color = new Color (0.2f, 1, 0.4f);
 							g.DrawLine (g.start, g.end, g.color);
-							Debug.Log ("start is" + g.start + "and end is " + g.end);
+						//	Debug.Log ("start is" + g.start + "and end is " + g.end);
 							if (g.count >= 4) {
-
-								collidingObject.GetComponent<DotController> ().cube.GetComponent<Extrude_cube> ().Die ();
-								g.count = 0;
+                            if (collidingObject.GetComponent<DotController>().cube.CompareTag("Ecube"))
+                            {
+                                collidingObject.GetComponent<DotController>().cube.GetComponent<Extrude_cube>().Die();
+                            }
+                            else if (collidingObject.GetComponent<DotController>().cube.CompareTag("Cylinder"))
+                            {
+                                collidingObject.GetComponent<DotController>().cube.GetComponent<Extrude_cylinder>().Die();
+                            }
+                            g.count = 0;
 								collidingObject = null;
 								// Destroy(gameObject);
 							}
@@ -259,7 +266,7 @@ public class LeftController : MonoBehaviour {
     {
         // the Collision contains a lot of info, but it’s the colliding
         // object we’re most interested in. 
-		Debug.Log("enter collision");
+		//Debug.Log("enter collision");
         Collider collider = collision.collider;
         collidingObject = collider.gameObject;
         // AudioSource.PlayClipAtPoint(appear, Camera.main.transform.position);
@@ -273,12 +280,12 @@ public class LeftController : MonoBehaviour {
         }
      else if (collider.CompareTag("Ecube"))
         {
-            Debug.Log("collide with ecube");
+        //    Debug.Log("collide with ecube");
         }
         else
         { // if we collided with something else, print to console
           // what the other thing was
-            Debug.Log("Collided with " + collider.tag);
+        //    Debug.Log("Collided with " + collider.tag);
         }
     }
 
@@ -299,7 +306,7 @@ public class LeftController : MonoBehaviour {
         else
         { // if we collided with something else, print to console
           // what the other thing was
-            Debug.Log("Collided with " + collider.tag);
+        //    Debug.Log("Collided with " + collider.tag);
         }
         collidingObject = null;
     }
