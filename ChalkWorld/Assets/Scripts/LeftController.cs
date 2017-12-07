@@ -165,7 +165,7 @@ public class LeftController : MonoBehaviour {
                 Vector3 triggerPoint = transform.position;
                 end = objToextrude.transform.InverseTransformPoint(triggerPoint);
                 Debug.Log("the end point to extrude is" + end);
-                objToextrude.transform.localScale += new Vector3(Mathf.Abs(end.x)/5, Mathf.Abs(end.y)/5, Mathf.Abs(end.x)/5);
+                objToextrude.transform.localScale += new Vector3(Mathf.Abs(end.x)/5, Mathf.Abs(end.y)/10, Mathf.Abs(end.x)/5);
               
 
             }
