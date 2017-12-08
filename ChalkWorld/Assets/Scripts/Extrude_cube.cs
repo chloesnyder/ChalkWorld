@@ -280,4 +280,24 @@ public class Extrude_cube : MonoBehaviour
         start = outbound;
         end = outbound;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("feet"))
+        {
+            Material m_Material;
+            m_Material = collision.collider.GetComponent<Renderer>().material;
+            m_Material.color = Color.green;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag("feet"))
+        {
+            Material m_Material;
+            m_Material = collision.collider.GetComponent<Renderer>().material;
+            m_Material.color = Color.blue;
+        }
+    }
 }
