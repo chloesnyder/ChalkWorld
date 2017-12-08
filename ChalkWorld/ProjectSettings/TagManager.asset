@@ -13,6 +13,7 @@ TagManager:
   - Ecube
   - Cylinder
   - DrawingHand
+  - feet
   layers:
   - Default
   - TransparentFX
