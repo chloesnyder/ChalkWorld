@@ -8,6 +8,8 @@ public class Extrude_cube : MonoBehaviour
     // Use this for initialization
 	public List<GameObject> dots=new List<GameObject>();
 	public GameObject myDots;
+
+    bool feetColliding;
     public struct Face
     {
         public Vector3 center;
@@ -55,7 +57,19 @@ public class Extrude_cube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Material m_Material;
+        m_Material = GetComponent<Renderer>().material;
 
+        if (feetColliding)
+        {
+
+            Debug.Log("the material is" + m_Material.color);
+            m_Material.color = Color.green;
+
+        } else
+        {
+            m_Material.color = Color.blue;
+        }
     }
 	private void CreateSphere()
 	{
@@ -283,11 +297,11 @@ public class Extrude_cube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+       
         if (collision.collider.CompareTag("feet"))
         {
-            Material m_Material;
-            m_Material = collision.collider.GetComponent<Renderer>().material;
-            m_Material.color = Color.green;
+            Debug.Log("enter the collision!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            feetColliding = true;
         }
     }
 
@@ -295,9 +309,7 @@ public class Extrude_cube : MonoBehaviour
     {
         if (collision.collider.CompareTag("feet"))
         {
-            Material m_Material;
-            m_Material = collision.collider.GetComponent<Renderer>().material;
-            m_Material.color = Color.blue;
+            feetColliding = false;
         }
     }
 }
