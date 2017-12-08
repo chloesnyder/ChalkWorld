@@ -55,11 +55,11 @@ public class MenuScript : MonoBehaviour {
 
         rc = rightControllerObject.GetComponent<RightController>(); //GameObject.FindGameObjectWithTag("DrawingHand").GetComponent<RightController>();
         
-        if (rc)
-        {
+        //if (rc)
+        //{
 
-           Debug.Log("what the fuck it's there...");
-        }
+        //   Debug.Log("what the fuck it's there...");
+        //}
 
         pointer.enabled = false;
     // eraseModecheckBox.onValueChanged

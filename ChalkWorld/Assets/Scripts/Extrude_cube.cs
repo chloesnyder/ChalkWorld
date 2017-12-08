@@ -60,10 +60,12 @@ public class Extrude_cube : MonoBehaviour
         Material m_Material;
         m_Material = GetComponent<Renderer>().material;
 
+ 
+
         if (feetColliding)
         {
 
-            Debug.Log("the material is" + m_Material.color);
+           // Debug.Log("the material is" + m_Material.color);
             m_Material.color = Color.green;
 
         } else
@@ -297,17 +299,25 @@ public class Extrude_cube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-       
-        if (collision.collider.CompareTag("feet"))
+//Debug.Log("enter the collision!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!with tag" + collision.collider.gameObject.name);
+       // if (collision.collider.gameObject.name.Equals("[VRTK][AUTOGEN][BodyColliderContainer]")|| collision.collider.gameObject.name.Equals("[VRTK][AUTOGEN][FootColliderContainer]"))
+       // {
+       //     Debug.Log("enter the collision!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+       //     feetColliding = true;
+//}
+
+        Debug.Log("enter the collision!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!with tag" + collision.collider.gameObject.name);
+        if (collision.collider.gameObject.CompareTag("feet"))
         {
-            Debug.Log("enter the collision!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+         Debug.Log("enter the collision!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             feetColliding = true;
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.collider.CompareTag("feet"))
+        //collision.collider.CompareTag("feet")
+        if (collision.gameObject.CompareTag("feet"))
         {
             feetColliding = false;
         }
