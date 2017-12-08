@@ -37,7 +37,7 @@ public class MenuScript : MonoBehaviour {
 
    void Start () {
 
-       menuActive = false;
+       menuActive = true;
 
        numCubes = 5;
 
@@ -61,6 +61,7 @@ public class MenuScript : MonoBehaviour {
            Debug.Log("what the fuck it's there...");
         }
 
+        pointer.enabled = false;
     // eraseModecheckBox.onValueChanged
     }
 
@@ -69,11 +70,11 @@ public class MenuScript : MonoBehaviour {
 
 void Update()
     {
-        menu.SetActive(menuActive);
-        pointer.enabled = menuActive;
-        pointer.activateOnEnable = true;
+      //  menu.SetActive(menuActive);
+      //  pointer.enabled = menuActive;
+      //  pointer.activateOnEnable = true;
 
-        pointer.pointerRenderer.enabled = menuActive;
+      //  pointer.pointerRenderer.enabled = menuActive;
 
         cylinderNumText.text = numCylinders.ToString();
         cubeNumText.text = numCubes.ToString();
@@ -86,10 +87,10 @@ void Update()
         // toggles menu on and off on touchpad press
  
 
-        if(controlEvents.touchpadPressed)
-        {
-            menuActive = !menuActive;
-        }
+     //   if(controlEvents.touchpadPressed)
+    //    {
+    //        menuActive = !menuActive;
+     //   }
   
 
 	}
