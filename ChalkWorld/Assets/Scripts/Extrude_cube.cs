@@ -37,13 +37,18 @@ public class Extrude_cube : MonoBehaviour
 		CreateSphere ();
         Mesh mesh = GetComponent<MeshFilter>().mesh;
 		GetComponent<MeshCollider>().sharedMesh = mesh;
+       Debug.Log("the size of normal at begain is"+ mesh.normals.Length) ;
         // Debug.Log("triangle number is" + mesh.triangles.Length);
 
-        /*
-        Vector3 start1 = new Vector3(0, 0.5f, 0);
-        Vector3 end1 = new Vector3(0, 1.2f, 0);
-        Extrude(start1, end1);
+        
+      //  Vector3 start1 = new Vector3(0, 0.5f, 0);
+      //  Vector3 end1 = new Vector3(0, 1.2f, 0);
+       // Extrude(start1, end1);
 
+
+      //  Debug.Log("the size of normal at extrude is" + mesh.normals.Length);
+        /*
+         * 
         start1 = new Vector3(0, 1.2f, 0);
         end1 = new Vector3(0, 2.2f, 0);
         Extrude(start1, end1);
@@ -201,6 +206,9 @@ public class Extrude_cube : MonoBehaviour
             }
          
         }
+
+
+
         Debug.Log("the start point real in extrude is" + face.center);
         int index = verts.Count; //get the current number of vert we have;
                                  // Debug.Log("verts number is" + index);
@@ -218,7 +226,7 @@ public class Extrude_cube : MonoBehaviour
 		addDot (v2);
 		addDot (v3);
         //add new triangles& faces
-        /*
+        
         int[] front = { face.points[0], face.points[1], index + 1, index };
         GeneFace(front);  //front face;
         int[] bank = { face.points[2], face.points[3], index + 3, index + 2 };
@@ -229,8 +237,8 @@ public class Extrude_cube : MonoBehaviour
         GeneFace(left);   //left face;
         int[] top = { index, index + 1, index + 2, index + 3 };
         GeneFace(top);    //top face;
-        */
         
+        /*
         int[] front = { face.points[0], face.points[3], index + 3, index };
         GeneFace(front);  //front face;
 
@@ -243,7 +251,7 @@ public class Extrude_cube : MonoBehaviour
         GeneFace(left);   //left face;
         int[] top = { index + 3, index + 2, index + 1, index };
         GeneFace(top);    //top face;
-
+        */
     
 
         //refresh the mesh
