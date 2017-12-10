@@ -187,6 +187,7 @@ public class LeftController : MonoBehaviour {
 		bool status = g.selected;
 		if(collidingObject!=null && collidingObject.CompareTag("Star"))
         {
+            collidingObject.GetComponent<AnimationScript>().Die();   //to collect the star
             
         }
 		else if (editing) {
