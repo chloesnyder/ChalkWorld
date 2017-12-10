@@ -185,8 +185,11 @@ public class LeftController : MonoBehaviour {
         GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
 		bool status = g.selected;
-		
-		if (editing) {
+		if(collidingObject!=null && collidingObject.CompareTag("Star"))
+        {
+            
+        }
+		else if (editing) {
         
 			if (collidingObject != null) {
 				if (collidingObject.CompareTag ("Ecube")) {

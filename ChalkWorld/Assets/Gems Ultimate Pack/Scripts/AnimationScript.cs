@@ -3,6 +3,10 @@ using System.Collections;
 
 public class AnimationScript : MonoBehaviour {
 
+
+    float timer = 1.5f;
+    bool Dying = false;
+
     public bool isAnimated = false;
 
     public bool isRotating = false;
@@ -21,7 +25,7 @@ public class AnimationScript : MonoBehaviour {
     public Vector3 endScale;
 
     private bool scalingUp = true;
-    public float scaleSpeed;
+    public float scaleSpeed=0.7f;
     public float scaleRate;
     private float scaleTimer;
 
@@ -33,9 +37,33 @@ public class AnimationScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-       
+        if (Dying)
+        {
+            timer -= Time.deltaTime;
+            scaleTimer += Time.deltaTime;
+
+            if (scalingUp)
+            {
+                transform.localScale = Vector3.Lerp(transform.localScale, endScale, scaleSpeed * Time.deltaTime);
+            }
+            else if (!scalingUp)
+            {
+                transform.localScale = Vector3.Lerp(transform.localScale, startScale, scaleSpeed * Time.deltaTime);
+            }
+
+            if (scaleTimer >= scaleRate)
+            {
+                if (scalingUp) { scalingUp = false; }
+                else if (!scalingUp) { scalingUp = true; }
+                scaleTimer = 0;
+            }
+            if (timer <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
         
-        if(isAnimated)
+       else if(isAnimated)
         {
             if(isRotating)
             {
@@ -85,4 +113,9 @@ public class AnimationScript : MonoBehaviour {
             }
         }
 	}
+
+    public void Die()
+    {
+        Dying = true;
+    }
 }
