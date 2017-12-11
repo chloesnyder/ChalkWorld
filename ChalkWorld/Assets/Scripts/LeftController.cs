@@ -185,8 +185,9 @@ public class LeftController : MonoBehaviour {
         GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
 		bool status = g.selected;
-		if(collidingObject!=null && collidingObject.CompareTag("Star"))
+		if(collidingObject!=null && collidingObject.CompareTag("star"))
         {
+            Debug.Log("hit the star````````````````````````````````00");
             collidingObject.GetComponent<AnimationScript>().Die();   //to collect the star
             
         }
@@ -273,6 +274,7 @@ public class LeftController : MonoBehaviour {
 		//Debug.Log("enter collision");
         Collider collider = collision.collider;
         collidingObject = collider.gameObject;
+        Debug.Log("collide with" + collidingObject.tag);
         // AudioSource.PlayClipAtPoint(appear, Camera.main.transform.position);
         if (collider.CompareTag("Dot"))
         {

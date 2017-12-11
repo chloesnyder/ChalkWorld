@@ -141,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dots: []
   myDots: {fileID: 1015063895675818, guid: 3df5a26fd63671849ac0ef91692f830a, type: 2}
+  origColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!136 &136325763699408134
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -947,10 +947,7 @@ namespace VRTK
         {
             if (bodyCollider != null && footCollider != null && collision.contacts.Length > 0 && collision.contacts[0].thisCollider.transform.name == footColliderContainerNameCheck)
             {
-                Debug.Log("step on object");
-                Material m_Material;
-                m_Material = collision.collider.GetComponent<Renderer>().material;
-
+             
 
                 float stepYIncrement = 0.55f;
                 float boxCastHeight = 0.01f;
@@ -972,17 +969,14 @@ namespace VRTK
                         lastFrameFloorY = floorCheckHit.point.y;
 
 
-                      
-                        m_Material = floorCheckHit.collider. GetComponent<Renderer>().material;
-                        m_Material.color = Color.green;
+                    
                     }
                     //If there isn't a teleporter then just force the position
                     else
                     {
                         playArea.position = new Vector3((floorCheckHit.point.x - (headset.position.x - playArea.position.x)), floorCheckHit.point.y, (floorCheckHit.point.z - (headset.position.z - playArea.position.z)));
 
-                        m_Material = floorCheckHit.collider.GetComponent<Renderer>().material;
-                        m_Material.color = Color.green;
+                    
                     }
                 }
             }
