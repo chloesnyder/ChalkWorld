@@ -10,6 +10,8 @@ public class Extrude_cube : MonoBehaviour
 	public GameObject myDots;
 
     bool feetColliding;
+    float timer = 2.0f;
+    public Color origColor;
     public struct Face
     {
         public Vector3 center;
@@ -38,15 +40,16 @@ public class Extrude_cube : MonoBehaviour
         Mesh mesh = GetComponent<MeshFilter>().mesh;
 		GetComponent<MeshCollider>().sharedMesh = mesh;
        Debug.Log("the size of normal at begain is"+ mesh.normals.Length) ;
+        origColor = GetComponent<Renderer>().material.color;
         // Debug.Log("triangle number is" + mesh.triangles.Length);
 
-        
-      //  Vector3 start1 = new Vector3(0, 0.5f, 0);
-      //  Vector3 end1 = new Vector3(0, 1.2f, 0);
-       // Extrude(start1, end1);
+
+        //  Vector3 start1 = new Vector3(0, 0.5f, 0);
+        //  Vector3 end1 = new Vector3(0, 1.2f, 0);
+        // Extrude(start1, end1);
 
 
-      //  Debug.Log("the size of normal at extrude is" + mesh.normals.Length);
+        //  Debug.Log("the size of normal at extrude is" + mesh.normals.Length);
         /*
          * 
         start1 = new Vector3(0, 1.2f, 0);
@@ -64,18 +67,24 @@ public class Extrude_cube : MonoBehaviour
     {
         Material m_Material;
         m_Material = GetComponent<Renderer>().material;
-
- 
+        Mesh mesh = GetComponent<MeshFilter>().mesh;
+     //   GetComponent<MeshCollider>().sharedMesh = mesh;
 
         if (feetColliding)
         {
-
-           // Debug.Log("the material is" + m_Material.color);
+            timer -= Time.deltaTime;
+            // Debug.Log("the material is" + m_Material.color);
             m_Material.color = Color.green;
+            if (timer <= 0)
+            {
+                feetColliding = false;
+                timer = 2.0f;
+            }
 
-        } else
+        }
+        else
         {
-            m_Material.color = Color.blue;
+            m_Material.color = origColor;
         }
     }
 	private void CreateSphere()
@@ -314,20 +323,25 @@ public class Extrude_cube : MonoBehaviour
        //     feetColliding = true;
 //}
 
-        Debug.Log("enter the collision!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!with tag" + collision.collider.gameObject.name);
+  /*      Debug.Log("enter the collision!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!with tag" + collision.collider.gameObject.name);
         if (collision.collider.gameObject.CompareTag("feet"))
         {
          Debug.Log("enter the collision!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             feetColliding = true;
-        }
+        }*/
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        //collision.collider.CompareTag("feet")
+      /*  //collision.collider.CompareTag("feet")
         if (collision.gameObject.CompareTag("feet"))
         {
             feetColliding = false;
-        }
+        }*/
+    }
+
+    public void changeColor()
+    {
+        feetColliding = true;
     }
 }

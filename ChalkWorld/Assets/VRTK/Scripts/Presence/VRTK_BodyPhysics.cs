@@ -455,6 +455,8 @@ namespace VRTK
 
         protected virtual void OnCollisionEnter(Collision collision)
         {
+
+
             if (CheckValidCollision(collision.gameObject))
             {
                 CheckStepUpCollision(collision);
@@ -574,6 +576,7 @@ namespace VRTK
 
         protected virtual void CollisionTracker_CollisionEnter(object sender, CollisionTrackerEventArgs e)
         {
+           
             OnCollisionEnter(e.collision);
         }
 
@@ -944,6 +947,11 @@ namespace VRTK
         {
             if (bodyCollider != null && footCollider != null && collision.contacts.Length > 0 && collision.contacts[0].thisCollider.transform.name == footColliderContainerNameCheck)
             {
+                Debug.Log("step on object");
+                Material m_Material;
+                m_Material = collision.collider.GetComponent<Renderer>().material;
+
+
                 float stepYIncrement = 0.55f;
                 float boxCastHeight = 0.01f;
 
@@ -954,17 +962,27 @@ namespace VRTK
                 float castDistance = castStart.y - playArea.position.y;
                 if (Physics.BoxCast(castStart, castExtents, Vector3.down, out floorCheckHit, Quaternion.identity, castDistance) && (floorCheckHit.point.y - playArea.position.y) > stepDropThreshold)
                 {
+
+
                     //If there is a teleporter attached then use that to move
                     if (teleporter != null && enableTeleport)
                     {
                         hitFloorYDelta = playArea.position.y - floorCheckHit.point.y;
                         TeleportFall(floorCheckHit.point.y, floorCheckHit);
                         lastFrameFloorY = floorCheckHit.point.y;
+
+
+                      
+                        m_Material = floorCheckHit.collider. GetComponent<Renderer>().material;
+                        m_Material.color = Color.green;
                     }
                     //If there isn't a teleporter then just force the position
                     else
                     {
                         playArea.position = new Vector3((floorCheckHit.point.x - (headset.position.x - playArea.position.x)), floorCheckHit.point.y, (floorCheckHit.point.z - (headset.position.z - playArea.position.z)));
+
+                        m_Material = floorCheckHit.collider.GetComponent<Renderer>().material;
+                        m_Material.color = Color.green;
                     }
                 }
             }
@@ -1042,6 +1060,7 @@ namespace VRTK
         {
             if (CalculateStepUpYOffset() > 0f)
             {
+
                 if (customFootColliderContainer != null)
                 {
                     footColliderContainer = InstantiateColliderContainer(customFootColliderContainer, FOOT_COLLIDER_CONTAINER_NAME, bodyColliderContainer.transform);
@@ -1053,6 +1072,9 @@ namespace VRTK
                 }
 
                 footCollider = GenerateCapsuleCollider(footColliderContainer, 0f);
+
+                
+              
             }
         }
 
@@ -1255,8 +1277,24 @@ namespace VRTK
             return (rightCheck || leftCheck);
         }
 
+        private IEnumerator SetBackToOriginalColor(Collider coll, Color orig)
+        {
+            // Debug.Log("Entered coroutine with color 1" + orig);
+            // yield return new WaitForSeconds(3f);
+           new WaitForSeconds(3f);
+            Material mat = coll.GetComponent<Renderer>().material;
+            Debug.Log("Entered coroutine with color 2 " + orig);
+            if (mat != null)
+            {
+                Debug.Log("Entered coroutine with color 3 " + orig);
+                mat.SetColor("_Color", Color.red);
+            }
+            yield return new WaitForSeconds(3f);
+        }
+
         protected virtual void SnapToNearestFloor()
         {
+            StopAllCoroutines();
             if (!preventSnapToFloor && (enableBodyCollisions || enableTeleport) && headset != null && headset.transform.position.y > playArea.position.y)
             {
                 Ray ray = new Ray(headset.transform.position, -playArea.up);
@@ -1265,6 +1303,32 @@ namespace VRTK
                 bool rayHit = VRTK_CustomRaycast.Raycast(customRaycast, ray, out rayCollidedWith, layersToIgnore, Mathf.Infinity, QueryTriggerInteraction.Ignore);
 #pragma warning restore 0618
                 hitFloorYDelta = playArea.position.y - rayCollidedWith.point.y;
+
+
+                // add by Yi & Chloe
+                Debug.Log("stand on something@!!!!!!!!");
+                Material m_Material;
+                m_Material = rayCollidedWith.collider.GetComponent<Renderer>().material;
+                GameObject stand = rayCollidedWith.collider.gameObject;
+                if (m_Material != null)
+                {
+                    Color origColor = m_Material.color;
+                    // Debug.Log("Orig color is " + origColor);
+                    if (stand.CompareTag("Cylinder"))
+                    {
+                        stand.GetComponent<Extrude_cylinder>().changeColor();
+                    }
+                    else if (stand.CompareTag("Ecube"))
+                    {
+                        stand.GetComponent<Extrude_cube>().changeColor();
+                    }
+                    
+                }
+
+                // add part end
+
+
+
 
                 if (initialFloorDrop && (ValidDrop(rayHit, rayCollidedWith, rayCollidedWith.point.y) || retogglePhysicsOnCanFall))
                 {
@@ -1276,6 +1340,8 @@ namespace VRTK
                 }
                 initialFloorDrop = true;
                 lastFrameFloorY = rayCollidedWith.point.y;
+            
+
             }
         }
 

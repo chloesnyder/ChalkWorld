@@ -7,7 +7,10 @@ public class Extrude_cylinder : MonoBehaviour {
     // Use this for initialization
     public List<GameObject> dots = new List<GameObject>();
     public GameObject myDots;
-	void Start () {
+    public Color origColor;
+    bool feetColliding;
+    float timer = 2.0f;
+    void Start () {
         Mesh mesh = GetComponent<MeshFilter>().mesh;
        // Debug.Log("size of vertices is" + mesh.vertexCount);
         for(int i = 0; i < mesh.vertices.Length; i++)
@@ -18,6 +21,8 @@ public class Extrude_cylinder : MonoBehaviour {
                 addDot(mesh.vertices[i]);
             }
         }
+
+        origColor = GetComponent<Renderer>().material.color;
     }
 
     public void Die()
@@ -48,5 +53,34 @@ public class Extrude_cylinder : MonoBehaviour {
     void Update () {
         Mesh mesh = GetComponent<MeshFilter>().mesh;
         GetComponent<MeshCollider>().sharedMesh = mesh;
+        Material m_Material;
+        m_Material = GetComponent<Renderer>().material;
+
+        
+
+       if (feetColliding)
+        {
+            timer -= Time.deltaTime;
+            // Debug.Log("the material is" + m_Material.color);
+            m_Material.color = Color.green;
+            if (timer <= 0)
+            {
+                feetColliding = false;
+                timer = 2.0f;
+            }
+
+        }
+        else
+        {
+            m_Material.color = origColor;
+        }
+
+    
+        
+    }
+
+    public void changeColor()
+    {
+        feetColliding = true;
     }
 }
