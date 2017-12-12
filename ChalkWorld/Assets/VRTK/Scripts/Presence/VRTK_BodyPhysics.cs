@@ -1318,6 +1318,18 @@ namespace VRTK
                     {
                         stand.GetComponent<Extrude_cube>().changeColor();
                     }
+                    if (stand.CompareTag("Floor"))
+                    {
+                        GameObject obj = GameObject.Find("GlobalObject");
+                        Global g = obj.GetComponent<Global>();
+                        g.onFloor = true;
+                    }
+                    else
+                    {
+                        GameObject obj = GameObject.Find("GlobalObject");
+                        Global g = obj.GetComponent<Global>();
+                        g.onFloor = false;
+                    }
                 }
                     
                // }

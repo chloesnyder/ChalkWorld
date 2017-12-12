@@ -12,6 +12,9 @@ public class Global : MonoBehaviour {
     public List<GameObject> lines = new List<GameObject>();
     public int starNum;
     public GameObject[] stars;
+
+    public bool onFloor = false;
+    public float onFloorTimer = 1.5f;
 	void Start () {
         selected = false;
        stars= GameObject.FindGameObjectsWithTag("star");
@@ -25,6 +28,20 @@ public class Global : MonoBehaviour {
         {
             SceneManager.LoadScene("Win_screen", LoadSceneMode.Single);
         }
+
+        if (onFloor == true)
+        {
+            onFloorTimer -= Time.deltaTime;
+            if (onFloorTimer <= 0)
+            {
+                SceneManager.LoadScene("Lose_screen", LoadSceneMode.Single);
+            }
+        }
+        else
+        {
+            onFloorTimer = 1.5f;
+        }
+
 	}
    
     public void DrawLine(Vector3 start, Vector3 end, Color color)
