@@ -8,7 +8,7 @@ public class Extrude_cube : MonoBehaviour
     // Use this for initialization
 	public List<GameObject> dots=new List<GameObject>();
 	public GameObject myDots;
-
+    int extrudeTime = 6;
     bool feetColliding;
     float timer = 2.0f;
     public Color origColor;
@@ -201,84 +201,89 @@ public class Extrude_cube : MonoBehaviour
     }
     public void Extrude(Vector3 start, Vector3 end)  //start is the central point of the face, 
     {
-        Vector3 normal = end - start;
-        Face face = new Face();
-        int count = 0;
-        for (int i = 0; i < faces.Count; i++)
+
+        
+
+        if (extrudeTime > 0)
         {
-            count++;
-            if (faces[i].center == start)
+
+            extrudeTime--;
+            Vector3 normal = end - start;
+            Face face = new Face();
+            int count = 0;
+            for (int i = 0; i < faces.Count; i++)
             {
-               // Debug.Log("------------------------can find the extrude start point");
-                face = faces[i];
-               // break;
+                count++;
+                if (faces[i].center == start)
+                {
+                    face = faces[i];
+                }
+
             }
-         
+
+
+
+            Debug.Log("the start point real in extrude is" + face.center);
+            int index = verts.Count; //get the current number of vert we have;
+                                     // Debug.Log("verts number is" + index);
+                                     //add verts
+            Vector3 v0 = verts[face.points[0]] + normal;
+            Vector3 v1 = verts[face.points[1]] + normal;
+            Vector3 v2 = verts[face.points[2]] + normal;
+            Vector3 v3 = verts[face.points[3]] + normal;
+            verts.Add(v0);
+            verts.Add(v1);
+            verts.Add(v2);
+            verts.Add(v3);
+            addDot(v0);
+            addDot(v1);
+            addDot(v2);
+            addDot(v3);
+            //add new triangles& faces
+
+            int[] front = { face.points[0], face.points[1], index + 1, index };
+            GeneFace(front);  //front face;
+            int[] bank = { face.points[2], face.points[3], index + 3, index + 2 };
+            GeneFace(bank);     //bank face;
+            int[] right = { face.points[1], face.points[2], index + 2, index + 1 };
+            GeneFace(right);   //right face;
+            int[] left = { face.points[3], face.points[0], index, index + 3 };
+            GeneFace(left);   //left face;
+            int[] top = { index, index + 1, index + 2, index + 3 };
+            GeneFace(top);    //top face;
+
+            /*
+            int[] front = { face.points[0], face.points[3], index + 3, index };
+            GeneFace(front);  //front face;
+
+            int[] bank = { index + 2, face.points[2], face.points[1], index + 1 };
+            GeneFace(bank);     //bank face;
+
+            int[] right = { face.points[3], face.points[2], index + 2, index + 3 };
+            GeneFace(right);   //right face;
+            int[] left = { face.points[0], index, index + 1, face.points[1] };
+            GeneFace(left);   //left face;
+            int[] top = { index + 3, index + 2, index + 1, index };
+            GeneFace(top);    //top face;
+            */
+
+
+            //refresh the mesh
+            Vector3[] vertices = verts.ToArray();
+            int[] triangles = triangle.ToArray();
+            Mesh mesh = GetComponent<MeshFilter>().mesh;
+            mesh.Clear();
+            mesh.vertices = vertices;
+            mesh.triangles = triangles;
+
+            MeshUtility.Optimize(mesh);
+            mesh.RecalculateNormals();
+            for (int i = 0; i < mesh.normals.Length; i++)
+            {
+                // Debug.Log("normal is:" + mesh.normals[i]);
+            }
+            GetComponent<MeshCollider>().sharedMesh = mesh;
         }
-
-
-
-        Debug.Log("the start point real in extrude is" + face.center);
-        int index = verts.Count; //get the current number of vert we have;
-                                 // Debug.Log("verts number is" + index);
-                                 //add verts
-        Vector3 v0 = verts[face.points[0]] + normal;
-        Vector3 v1 = verts[face.points[1]] + normal;
-        Vector3 v2 = verts[face.points[2]] + normal;
-        Vector3 v3 = verts[face.points[3]] + normal;
-        verts.Add(v0);
-        verts.Add(v1);
-        verts.Add(v2);
-        verts.Add(v3);
-		addDot (v0);
-		addDot (v1);
-		addDot (v2);
-		addDot (v3);
-        //add new triangles& faces
-        
-        int[] front = { face.points[0], face.points[1], index + 1, index };
-        GeneFace(front);  //front face;
-        int[] bank = { face.points[2], face.points[3], index + 3, index + 2 };
-        GeneFace(bank);     //bank face;
-        int[] right = { face.points[1], face.points[2], index + 2, index + 1 };
-        GeneFace(right);   //right face;
-        int[] left = { face.points[3], face.points[0], index, index + 3 };
-        GeneFace(left);   //left face;
-        int[] top = { index, index + 1, index + 2, index + 3 };
-        GeneFace(top);    //top face;
-        
-        /*
-        int[] front = { face.points[0], face.points[3], index + 3, index };
-        GeneFace(front);  //front face;
-
-        int[] bank = { index + 2, face.points[2], face.points[1], index + 1 };
-        GeneFace(bank);     //bank face;
-
-        int[] right = { face.points[3], face.points[2], index + 2, index + 3 };
-        GeneFace(right);   //right face;
-        int[] left = { face.points[0], index, index + 1, face.points[1] };
-        GeneFace(left);   //left face;
-        int[] top = { index + 3, index + 2, index + 1, index };
-        GeneFace(top);    //top face;
-        */
-    
-
-        //refresh the mesh
-        Vector3[] vertices = verts.ToArray();
-        int[] triangles = triangle.ToArray();
-        Mesh mesh = GetComponent<MeshFilter>().mesh;
-        mesh.Clear();
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-
-        MeshUtility.Optimize(mesh);
-        mesh.RecalculateNormals();
-        for (int i = 0; i < mesh.normals.Length; i++)
-        {
-            // Debug.Log("normal is:" + mesh.normals[i]);
-        }
-        GetComponent<MeshCollider>().sharedMesh = mesh;
-
     }
 
     private void OnMouseDown()

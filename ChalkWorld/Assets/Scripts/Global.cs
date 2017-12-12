@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Global : MonoBehaviour {
     public Vector3 start;
     public Vector3 end;
@@ -10,13 +10,21 @@ public class Global : MonoBehaviour {
     // Use this for initialization
     public bool selected;
     public List<GameObject> lines = new List<GameObject>();
+    public int starNum;
+    public GameObject[] stars;
 	void Start () {
         selected = false;
+       stars= GameObject.FindGameObjectsWithTag("star");
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        stars = GameObject.FindGameObjectsWithTag("star");
+        if (stars.Length <= 0)
+        {
+            SceneManager.LoadScene("Win_screen", LoadSceneMode.Single);
+        }
 	}
    
     public void DrawLine(Vector3 start, Vector3 end, Color color)

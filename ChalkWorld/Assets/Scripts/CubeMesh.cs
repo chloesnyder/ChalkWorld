@@ -11,6 +11,7 @@ public class CubeMesh : MonoBehaviour {
     private int count = 0;
     private GameObject[] dots = new GameObject[8];
     private GameObject[] lines=new GameObject[4];
+    private int ExtrudeTime=6;
     // Use this for initialization
     void Start () {
         CreateCube();

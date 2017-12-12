@@ -1301,12 +1301,14 @@ namespace VRTK
 
                 // add by Yi & Chloe
                 Debug.Log("stand on something@!!!!!!!!");
-                Material m_Material;
-                m_Material = rayCollidedWith.collider.GetComponent<Renderer>().material;
-                GameObject stand = rayCollidedWith.collider.gameObject;
-                if (m_Material != null)
+                // Material m_Material;
+                //  m_Material = rayCollidedWith.collider.GetComponent<Renderer>().material;
+                if (rayCollidedWith.collider != null)
                 {
-                    Color origColor = m_Material.color;
+                    GameObject stand = rayCollidedWith.collider.gameObject;
+                    //    if (m_Material != null)
+                    //    {
+                    // Color origColor = m_Material.color;
                     // Debug.Log("Orig color is " + origColor);
                     if (stand.CompareTag("Cylinder"))
                     {
@@ -1316,8 +1318,9 @@ namespace VRTK
                     {
                         stand.GetComponent<Extrude_cube>().changeColor();
                     }
-                    
                 }
+                    
+               // }
 
                 // add part end
 
