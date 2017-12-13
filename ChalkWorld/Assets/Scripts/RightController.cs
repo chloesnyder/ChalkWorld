@@ -155,7 +155,10 @@ public class RightController : MonoBehaviour {
 		} else if (spawnObj.Equals ("Circle")) {
 			Debug.Log ("Spawned a cylinder");
 			spawned = Instantiate (SpawnedCylinder, _controller.transform.position, Quaternion.identity);
-		}
+		} else
+        {
+            spawned = null;
+        }
 //		objectInHand = spawned;
 //		collidingObject = null;
 //		var joint = AddFixedJoint();

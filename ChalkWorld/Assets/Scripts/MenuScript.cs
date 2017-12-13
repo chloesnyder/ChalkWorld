@@ -81,28 +81,35 @@ void Update()
     void cubePressed()
     {
         // enables drawing a cube, takes a cube out of inventory
-        // rightControllerScript.setSpawn("Square");
-        rc.setSpawn("Square");
+        
         numCubes--;
-		if (numCubes < 0)
-			numCubes = 0;
-        canDrawCube = true;
-        canDrawCylinder = false;
+        if (numCubes < 0)
+        {
+            numCubes = 0;
+            rc.setSpawn("None");
+        }
+        else
+        {
+            rc.setSpawn("Square");
+            canDrawCube = true;
+            canDrawCylinder = false;
+        }
     }
 
     void cylinderPressed()
     {
-        rc.setSpawn("Circle");
         numCylinders--;
-		if (numCylinders < 0)
-			numCylinders = 0;
-        canDrawCube = false;
-        canDrawCylinder = true;
-    }
-
-    void eraseModeToggled()
-    {
-        eraseMode = !eraseMode;
+        if (numCylinders < 0)
+        {
+            numCylinders = 0;
+            rc.setSpawn("None");
+        }
+        else
+        {
+            rc.setSpawn("Circle");
+            canDrawCube = false;
+            canDrawCylinder = true;
+        }
     }
 
 	public void addCylinder()
