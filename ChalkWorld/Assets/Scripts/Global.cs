@@ -15,9 +15,14 @@ public class Global : MonoBehaviour {
 
     public bool onFloor = false;
     public float onFloorTimer = 1.5f;
+
+	public MenuScript menuScript;
+
 	void Start () {
         selected = false;
        stars= GameObject.FindGameObjectsWithTag("star");
+
+		menuScript = GetComponent<MenuScript> ();
         
 	}
 	
@@ -61,4 +66,15 @@ public class Global : MonoBehaviour {
         lines.Add(myLine);
         // GameObject.Destroy(myLine, duration);
     }
+
+	public void addCube()
+	{
+		menuScript.addCube();
+	}
+
+	public void addCylinder()
+	{
+		menuScript.addCylinder();
+	}
+
 }

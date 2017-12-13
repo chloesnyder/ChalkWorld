@@ -39,9 +39,9 @@ public class MenuScript : MonoBehaviour {
 
        menuActive = true;
 
-       numCubes = 5;
+       numCubes = 0;
 
-       numCylinders = 5;
+       numCylinders = 0;
 
 
        cylinderNumText.text = numCylinders.ToString();
@@ -55,14 +55,8 @@ public class MenuScript : MonoBehaviour {
 
         rc = rightControllerObject.GetComponent<RightController>(); //GameObject.FindGameObjectWithTag("DrawingHand").GetComponent<RightController>();
         
-        //if (rc)
-        //{
-
-        //   Debug.Log("what the fuck it's there...");
-        //}
-
         pointer.enabled = false;
-    // eraseModecheckBox.onValueChanged
+
     }
 
 
@@ -70,11 +64,6 @@ public class MenuScript : MonoBehaviour {
 
 void Update()
     {
-      //  menu.SetActive(menuActive);
-      //  pointer.enabled = menuActive;
-      //  pointer.activateOnEnable = true;
-
-      //  pointer.pointerRenderer.enabled = menuActive;
 
         cylinderNumText.text = numCylinders.ToString();
         cubeNumText.text = numCubes.ToString();
@@ -84,14 +73,7 @@ void Update()
  
     // Update is called once per frame
     void FixedUpdate () {
-        // toggles menu on and off on touchpad press
- 
-
-     //   if(controlEvents.touchpadPressed)
-    //    {
-    //        menuActive = !menuActive;
-     //   }
-  
+   
 
 	}
 
@@ -102,6 +84,8 @@ void Update()
         // rightControllerScript.setSpawn("Square");
         rc.setSpawn("Square");
         numCubes--;
+		if (numCubes < 0)
+			numCubes = 0;
         canDrawCube = true;
         canDrawCylinder = false;
     }
@@ -110,6 +94,8 @@ void Update()
     {
         rc.setSpawn("Circle");
         numCylinders--;
+		if (numCylinders < 0)
+			numCylinders = 0;
         canDrawCube = false;
         canDrawCylinder = true;
     }
@@ -118,6 +104,16 @@ void Update()
     {
         eraseMode = !eraseMode;
     }
+
+	public void addCylinder()
+	{
+		numCylinders++;
+	}
+
+	public void addCube()
+	{
+		numCubes++;
+	}
 
 
 

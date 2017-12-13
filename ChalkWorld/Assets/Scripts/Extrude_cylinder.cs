@@ -27,9 +27,10 @@ public class Extrude_cylinder : MonoBehaviour {
 
     public void Die()
     {
+		GameObject obj = GameObject.Find("GlobalObject");
+		Global g = obj.GetComponent<Global>();
+		g.addCylinder ();
         Destroy(gameObject);
-        GameObject obj = GameObject.Find("GlobalObject");
-        Global g = obj.GetComponent<Global>();
         for (int i = 0; i < dots.Count; i++)
         {
             Destroy(dots[i]);

@@ -112,9 +112,10 @@ public class Extrude_cube : MonoBehaviour
 
 
 	public void Die(){
-		Destroy(gameObject);
 		GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
+		g.addCube ();
+		Destroy(gameObject);
 		for(int i=0;i<dots.Count;i++){
 			Destroy(dots[i]);
 		}
