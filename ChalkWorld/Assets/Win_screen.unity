@@ -277,6 +277,31 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114119095316634642, guid: 8fc2d91bc5ab3304eb235151e963eff3,
+        type: 2}
+      propertyPath: m_Text
+      value: You Win!
+      objectReference: {fileID: 0}
+    - target: {fileID: 114609241154718586, guid: 8fc2d91bc5ab3304eb235151e963eff3,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114587548471314566, guid: 8fc2d91bc5ab3304eb235151e963eff3,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114121219658533994, guid: 8fc2d91bc5ab3304eb235151e963eff3,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114409714593605374, guid: 8fc2d91bc5ab3304eb235151e963eff3,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8fc2d91bc5ab3304eb235151e963eff3, type: 2}
   m_IsPrefabParent: 0
