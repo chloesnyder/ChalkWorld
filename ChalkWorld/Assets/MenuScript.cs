@@ -49,9 +49,9 @@ public class MenuScript : MonoBehaviour {
        cubeNumText.text = numCubes.ToString();
 
 
-       cubeButton.onClick.AddListener(cubePressed);
+      // cubeButton.onClick.AddListener(cubePressed);
 
-       cylinderButton.onClick.AddListener(cylinderPressed);
+      // cylinderButton.onClick.AddListener(cylinderPressed);
 
         rc = rightControllerObject.GetComponent<RightController>(); //GameObject.FindGameObjectWithTag("DrawingHand").GetComponent<RightController>();
         
@@ -78,7 +78,7 @@ void Update()
 	//}
 
 
-    void cubePressed()
+/*    void cubePressed()
     {
         // enables drawing a cube, takes a cube out of inventory
         
@@ -111,7 +111,7 @@ void Update()
             canDrawCylinder = true;
         }
     }
-
+    */
 	public void addCylinder()
 	{
         Debug.Log("added cylinder");
@@ -124,6 +124,15 @@ void Update()
 		numCubes++;
 	}
 
+    public void subCube()
+    {
+        numCubes--;
+    }
+
+    public void subCylinder()
+    {
+        numCylinders--;
+    }
 
 
 

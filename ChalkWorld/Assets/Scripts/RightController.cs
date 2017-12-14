@@ -18,8 +18,10 @@ public class RightController : MonoBehaviour {
 	private SteamVR_TrackedObject trackedObj;
 	private GameObject collidingObject;
 	// 2
-	private GameObject objectInHand; 
-	private SteamVR_Controller.Device Controller
+	private GameObject objectInHand;
+    GameObject go;
+        Global g;
+    private SteamVR_Controller.Device Controller
 	{
 		get { return SteamVR_Controller.Input((int)trackedObj.index); }
 	}
@@ -27,8 +29,10 @@ public class RightController : MonoBehaviour {
 	void Awake()
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
-		//leftController = GameObject.FindGameObjectWithTag ("LeftController");
-	}
+        go = GameObject.Find("GlobalObject");
+        g = go.GetComponent<Global>();
+        //leftController = GameObject.FindGameObjectWithTag ("LeftController");
+    }
 	private void SetCollidingObject(Collider col)
 	{
 		// 1
@@ -143,19 +147,26 @@ public class RightController : MonoBehaviour {
 
 	}
 	public void setSpawn(string obj){
-		spawnObj = obj;
-		spawn = true;
-	}
+        // GameObject go = GameObject.Find("GlobalObject");
+        // Global g = go.GetComponent<Global>();
+        Debug.Log("Entering set spawn " + obj);
+        spawnObj = obj;
+        Debug.Log(g == null);
+        spawn = g.checkInventory(obj);
+        Debug.Log("Spawn bool: " + spawn);
+    }
 
 	void SpawnObject(){
 		GameObject spawned = null;
 		if (spawnObj.Equals ("Square")) {
 			Debug.Log ("Spawned a cube");
 			spawned = Instantiate (SpawnedCube, _controller.transform.position, Quaternion.identity);
+            g.decrementInventory(spawnObj);
 		} else if (spawnObj.Equals ("Circle")) {
 			Debug.Log ("Spawned a cylinder");
 			spawned = Instantiate (SpawnedCylinder, _controller.transform.position, Quaternion.identity);
-		} else
+            g.decrementInventory(spawnObj);
+        } else
         {
             spawned = null;
         }

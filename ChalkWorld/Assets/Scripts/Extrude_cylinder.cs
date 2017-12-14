@@ -35,7 +35,7 @@ public class Extrude_cylinder : MonoBehaviour {
 
        GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
-        g.incrementInv("Cylinder");
+        g.incrementInv("Circle");
 
         Destroy(gameObject);
         for (int i = 0; i < dots.Count; i++)

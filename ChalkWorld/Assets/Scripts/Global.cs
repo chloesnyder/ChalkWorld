@@ -17,6 +17,9 @@ public class Global : MonoBehaviour {
     public float onFloorTimer = 1.5f;
 
     public GameObject rightControllerObject;
+
+    float numCubes;
+    float numCylinders;
     //public MenuScript menuScript;
 
     void Start () {
@@ -49,8 +52,12 @@ public class Global : MonoBehaviour {
             onFloorTimer = 1.5f;
         }
 
-	}
-   
+        numCylinders = rightControllerObject.GetComponent<MenuScript>().numCylinders;
+        numCubes = rightControllerObject.GetComponent<MenuScript>().numCubes;
+
+
+    }
+
     public void DrawLine(Vector3 start, Vector3 end, Color color)
     {
         GameObject myLine = new GameObject();
@@ -69,28 +76,50 @@ public class Global : MonoBehaviour {
         // GameObject.Destroy(myLine, duration);
     }
 
-	public void addCube()
-	{
-		//menuScript.addCube();
-	}
-
-	public void addCylinder()
-	{
-		//menuScript.addCylinder();
-	}
 
     public void incrementInv(string shape)
     {
         //RightController rc = rightControllerObject.GetComponent<RightController>();
         Debug.Log("inside increment inv");
-        if (shape.Equals("Cylinder"))
+        if (shape.Equals("Circle"))
         {
             rightControllerObject.GetComponent<MenuScript>().addCylinder();
         }
-        else if (shape.Equals("Cube"))
+        else if (shape.Equals("Square"))
         {
             rightControllerObject.GetComponent<MenuScript>().addCube();
         }
+    }
+
+    public void decrementInventory(string shape)
+    {
+
+        if (shape.Equals("Circle"))
+        {
+            rightControllerObject.GetComponent<MenuScript>().subCylinder();
+        }
+        else if (shape.Equals("Square"))
+        {
+            rightControllerObject.GetComponent<MenuScript>().subCube();
+        }
+    }
+
+    public bool checkInventory(string shape)
+    {
+        Debug.Log("Check inventory reached");
+
+        if (shape.Equals("Circle"))
+        {
+            Debug.Log("Num cylinders = " + numCylinders);
+           return numCylinders > 0;
+        }
+        else if (shape.Equals("Square"))
+        {
+            Debug.Log("Num cubes = " + numCubes);
+            return numCubes > 0;
+
+        }
+        return false;
     }
 
 }
