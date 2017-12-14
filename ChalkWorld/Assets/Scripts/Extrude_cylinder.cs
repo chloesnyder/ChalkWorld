@@ -8,6 +8,7 @@ public class Extrude_cylinder : MonoBehaviour {
     public List<GameObject> dots = new List<GameObject>();
     public GameObject myDots;
     public Color origColor;
+    public Color origOutline;
     bool feetColliding;
     float timer = 2.0f;
     void Start () {
@@ -23,6 +24,7 @@ public class Extrude_cylinder : MonoBehaviour {
         }
 
         origColor = GetComponent<Renderer>().material.color;
+        origOutline = GetComponent<Renderer>().material.GetColor("_OutlineColor");
     }
 
     public void Die()
@@ -64,6 +66,7 @@ public class Extrude_cylinder : MonoBehaviour {
             timer -= Time.deltaTime;
             // Debug.Log("the material is" + m_Material.color);
             m_Material.color = Color.green;
+            m_Material.SetColor("_OutlineColor", Color.green);
             if (timer <= 0)
             {
                 feetColliding = false;
@@ -74,6 +77,7 @@ public class Extrude_cylinder : MonoBehaviour {
         else
         {
             m_Material.color = origColor;
+            m_Material.SetColor("_OutlineColor", origOutline);
         }
 
     

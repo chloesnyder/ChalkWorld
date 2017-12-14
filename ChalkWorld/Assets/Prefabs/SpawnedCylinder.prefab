@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1591190055997866}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.688, y: 0, z: 0}
+  m_LocalPosition: {x: 1.114, y: 0.192, z: 0.63}
   m_LocalScale: {x: 0.3, y: 0.2, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
@@ -60,7 +60,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 34a2d4fc8f422c345a4cc739f3ee3b81, type: 2}
+  - {fileID: 2100000, guid: 85b261a172181604482ecbec270d6942, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -142,6 +142,7 @@ MonoBehaviour:
   dots: []
   myDots: {fileID: 1015063895675818, guid: 3df5a26fd63671849ac0ef91692f830a, type: 2}
   origColor: {r: 0, g: 0, b: 0, a: 0}
+  origOutline: {r: 0, g: 0, b: 0, a: 0}
 --- !u!136 &136325763699408134
 CapsuleCollider:
   m_ObjectHideFlags: 1

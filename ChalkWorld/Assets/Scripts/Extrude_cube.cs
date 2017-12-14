@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEditor;
 public class Extrude_cube : MonoBehaviour
 {
+    public Color origOutline;
 
     // Use this for initialization
-	public List<GameObject> dots=new List<GameObject>();
+    public List<GameObject> dots=new List<GameObject>();
 	public GameObject myDots;
     int extrudeTime = 6;
     bool feetColliding;
@@ -41,6 +42,7 @@ public class Extrude_cube : MonoBehaviour
 		GetComponent<MeshCollider>().sharedMesh = mesh;
        Debug.Log("the size of normal at begain is"+ mesh.normals.Length) ;
         origColor = GetComponent<Renderer>().material.color;
+        origOutline = GetComponent<Renderer>().material.GetColor("_OutlineColor");
         // Debug.Log("triangle number is" + mesh.triangles.Length);
 
 
@@ -75,6 +77,7 @@ public class Extrude_cube : MonoBehaviour
             timer -= Time.deltaTime;
             // Debug.Log("the material is" + m_Material.color);
             m_Material.color = Color.green;
+            m_Material.SetColor("_OutlineColor", Color.green);
             if (timer <= 0)
             {
                 feetColliding = false;
@@ -85,6 +88,7 @@ public class Extrude_cube : MonoBehaviour
         else
         {
             m_Material.color = origColor;
+            m_Material.SetColor("_OutlineColor", origOutline);
         }
     }
 	private void CreateSphere()
@@ -240,6 +244,7 @@ public class Extrude_cube : MonoBehaviour
             addDot(v1);
             addDot(v2);
             addDot(v3);
+
             //add new triangles& faces
 
             int[] front = { face.points[0], face.points[1], index + 1, index };
@@ -247,9 +252,9 @@ public class Extrude_cube : MonoBehaviour
             int[] bank = { face.points[2], face.points[3], index + 3, index + 2 };
             GeneFace(bank);     //bank face;
             int[] right = { face.points[1], face.points[2], index + 2, index + 1 };
-            GeneFace(right);   //right face;
             int[] left = { face.points[3], face.points[0], index, index + 3 };
             GeneFace(left);   //left face;
+            GeneFace(right);   //right face;
             int[] top = { index, index + 1, index + 2, index + 3 };
             GeneFace(top);    //top face;
 
