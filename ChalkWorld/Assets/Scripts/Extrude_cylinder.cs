@@ -9,6 +9,8 @@ public class Extrude_cylinder : MonoBehaviour {
     public GameObject myDots;
     public Color origColor;
     public Color origOutline;
+
+    //public GameObject rightControllerObject;
     bool feetColliding;
     float timer = 2.0f;
     void Start () {
@@ -29,9 +31,12 @@ public class Extrude_cylinder : MonoBehaviour {
 
     public void Die()
     {
-		GameObject obj = GameObject.Find("GlobalObject");
+        Debug.Log("dead cylinder");
+
+       GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
-		g.addCylinder ();
+        g.incrementInv("Cylinder");
+
         Destroy(gameObject);
         for (int i = 0; i < dots.Count; i++)
         {
@@ -41,8 +46,9 @@ public class Extrude_cylinder : MonoBehaviour {
         for (int i = 0; i < g.lines.Capacity; i++)
         {
             Destroy(g.lines[i]);
+            
         }
-
+        g.lines.Clear();
     }
     private void addDot(Vector3 point)
     {

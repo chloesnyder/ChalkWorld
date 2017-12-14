@@ -16,13 +16,15 @@ public class Global : MonoBehaviour {
     public bool onFloor = false;
     public float onFloorTimer = 1.5f;
 
-	public MenuScript menuScript;
+    public GameObject rightControllerObject;
+    //public MenuScript menuScript;
 
-	void Start () {
+    void Start () {
         selected = false;
        stars= GameObject.FindGameObjectsWithTag("star");
 
-		menuScript = GetComponent<MenuScript> ();
+
+		//menuScript = GetComponent<MenuScript> ();
         
 	}
 	
@@ -69,12 +71,26 @@ public class Global : MonoBehaviour {
 
 	public void addCube()
 	{
-		menuScript.addCube();
+		//menuScript.addCube();
 	}
 
 	public void addCylinder()
 	{
-		menuScript.addCylinder();
+		//menuScript.addCylinder();
 	}
+
+    public void incrementInv(string shape)
+    {
+        //RightController rc = rightControllerObject.GetComponent<RightController>();
+        Debug.Log("inside increment inv");
+        if (shape.Equals("Cylinder"))
+        {
+            rightControllerObject.GetComponent<MenuScript>().addCylinder();
+        }
+        else if (shape.Equals("Cube"))
+        {
+            rightControllerObject.GetComponent<MenuScript>().addCube();
+        }
+    }
 
 }

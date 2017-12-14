@@ -71,11 +71,11 @@ void Update()
     }
 
  
-    // Update is called once per frame
-    void FixedUpdate () {
+ //   // Update is called once per frame
+ //   void FixedUpdate () {
    
 
-	}
+	//}
 
 
     void cubePressed()
@@ -114,7 +114,9 @@ void Update()
 
 	public void addCylinder()
 	{
+        Debug.Log("added cylinder");
 		numCylinders++;
+        Debug.Log("Num of cylinder = " + numCylinders);
 	}
 
 	public void addCube()

@@ -1307,7 +1307,7 @@ namespace VRTK
 
 
                 // add by Yi & Chloe
-                Debug.Log("stand on something@!!!!!!!!");
+              //  Debug.Log("stand on something@!!!!!!!!");
                 // Material m_Material;
                 //  m_Material = rayCollidedWith.collider.GetComponent<Renderer>().material;
                 if (rayCollidedWith.collider != null)

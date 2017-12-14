@@ -118,8 +118,9 @@ public class Extrude_cube : MonoBehaviour
 	public void Die(){
 		GameObject obj = GameObject.Find("GlobalObject");
 		Global g = obj.GetComponent<Global>();
-		g.addCube ();
-		Destroy(gameObject);
+       // g.addCube();
+            g.incrementInv("Cube");
+        Destroy(gameObject);
 		for(int i=0;i<dots.Count;i++){
 			Destroy(dots[i]);
 		}
@@ -128,8 +129,9 @@ public class Extrude_cube : MonoBehaviour
 		{
 			Destroy(g.lines[i]);
 		}
+        g.lines.Clear();
 
-	}
+    }
     private void CreatPlane()
     {
         Vector3[] vertices = {
