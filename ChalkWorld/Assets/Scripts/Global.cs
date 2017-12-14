@@ -30,10 +30,9 @@ public class Global : MonoBehaviour {
 		//menuScript = GetComponent<MenuScript> ();
         
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        stars = GameObject.FindGameObjectsWithTag("star");
+
+    void CheckLevel()
+    {
         if (stars.Length <= 0)
         {
             SceneManager.LoadScene("Win_screen", LoadSceneMode.Single);
@@ -49,11 +48,41 @@ public class Global : MonoBehaviour {
         }
         else
         {
+            if ((rightControllerObject != null) && (rightControllerObject.GetComponent<MenuScript>() !=  null))
+            {
+                numCylinders = rightControllerObject.GetComponent<MenuScript>().getNumCylinders();
+                numCubes = rightControllerObject.GetComponent<MenuScript>().getNumCubes();
+            }
+         
             onFloorTimer = 1.5f;
         }
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        stars = GameObject.FindGameObjectsWithTag("star");
+        CheckLevel();
+        //if (stars.Length <= 0)
+        //{
+        //    SceneManager.LoadScene("Win_screen", LoadSceneMode.Single);
+        //}
 
-        numCylinders = rightControllerObject.GetComponent<MenuScript>().numCylinders;
-        numCubes = rightControllerObject.GetComponent<MenuScript>().numCubes;
+        //if (onFloor == true)
+        //{
+        //    onFloorTimer -= Time.deltaTime;
+        //    if (onFloorTimer <= 0)
+        //    {
+        //        SceneManager.LoadScene("Lose_screen", LoadSceneMode.Single);
+        //    }
+        //}
+        //else
+        //{
+        //    numCylinders = rightControllerObject.GetComponent<MenuScript>().numCylinders;
+        //    numCubes = rightControllerObject.GetComponent<MenuScript>().numCubes;
+        //    onFloorTimer = 1.5f;
+        //}
+
+        
 
 
     }

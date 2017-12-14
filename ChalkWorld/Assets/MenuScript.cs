@@ -134,6 +134,16 @@ void Update()
         numCylinders--;
     }
 
+    public float getNumCubes()
+    {
+        return numCubes;
+    }
+
+    public float getNumCylinders()
+    {
+        return numCylinders;
+    }
+
 
 
 
