@@ -35,7 +35,19 @@ public class Global : MonoBehaviour {
     {
         if (stars.Length <= 0)
         {
-            SceneManager.LoadScene("Win_screen", LoadSceneMode.Single);
+        string sceneName=SceneManager.GetActiveScene().name;
+            if (sceneName.Equals("chalk_world_level1_final")) { 
+            SceneManager.LoadScene("chalk_world_level2_final", LoadSceneMode.Single);
+        }
+        else if (sceneName.Equals("chalk_world_level2_final"))
+        {
+                SceneManager.LoadScene("chalk_world_level3_final", LoadSceneMode.Single);
+            }
+            else if (sceneName.Equals("chalk_world_level3_final"))
+            {
+                SceneManager.LoadScene("Win_screen", LoadSceneMode.Single);
+            }
+            //.LoadScene("Win_screen", LoadSceneMode.Single);
         }
 
         if (onFloor == true)
