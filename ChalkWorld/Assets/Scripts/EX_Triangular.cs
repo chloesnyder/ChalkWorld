@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 public class EX_Triangular : MonoBehaviour {
 
     public List<GameObject> dots = new List<GameObject>();
@@ -116,7 +116,7 @@ public class EX_Triangular : MonoBehaviour {
         mesh.Clear();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
-        MeshUtility.Optimize(mesh);
+       // MeshUtility.Optimize(mesh);
         mesh.RecalculateNormals();
         int[] index = { 0, 1, 2 };
         Vector3 center1 = (vertices[0] + vertices[1] + vertices[2]) / 3;
@@ -211,7 +211,7 @@ public class EX_Triangular : MonoBehaviour {
         mesh.vertices = vertices;
         mesh.triangles = triangles;
 
-        MeshUtility.Optimize(mesh);
+        //MeshUtility.Optimize(mesh);
         mesh.RecalculateNormals();
 
         GetComponent<MeshCollider>().sharedMesh = mesh;

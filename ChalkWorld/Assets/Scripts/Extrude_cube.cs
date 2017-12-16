@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 public class Extrude_cube : MonoBehaviour
 {
     public Color origOutline;
@@ -178,7 +178,7 @@ public class Extrude_cube : MonoBehaviour
         mesh.Clear();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
-        MeshUtility.Optimize(mesh);
+       // MeshUtility.Optimize(mesh);
         mesh.RecalculateNormals();
         int[] index = { 0, 1, 2, 3 };
         faces.Add(new Face(new Vector3(0, 0, -0.5f), index));
@@ -284,7 +284,7 @@ public class Extrude_cube : MonoBehaviour
             mesh.vertices = vertices;
             mesh.triangles = triangles;
 
-            MeshUtility.Optimize(mesh);
+            //MeshUtility.Optimize(mesh);
             mesh.RecalculateNormals();
             for (int i = 0; i < mesh.normals.Length; i++)
             {

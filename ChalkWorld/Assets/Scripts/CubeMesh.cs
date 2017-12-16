@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+// UnityEditor;
 using UnityEngine;
 
 
@@ -80,7 +80,7 @@ public class CubeMesh : MonoBehaviour {
         mesh.Clear();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
-       MeshUtility.Optimize(mesh);
+       //MeshUtility.Optimize(mesh);
         mesh.RecalculateNormals();
         Color color = new Color(1.0f, 0.8f, 0.2f);
         DrawLine(0,transform.TransformPoint(vertices[2]), transform.TransformPoint(vertices[3]), color);
